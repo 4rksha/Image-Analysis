@@ -9,6 +9,7 @@
 #include "app.h"  
 #include "CharacterController.h"
 #include "glcore.h"
+#include "shader.h"
 
 
 
@@ -22,11 +23,15 @@ public:
     int init( )
     {
         m_objet= read_mesh("data/cube.obj");
-        m_terrain= read_mesh("data/tp1_iehl/terrain.obj");
+        m_terrain= read_mesh("data/projet/sale2.obj");
+        lit= read_mesh("data/projet/litdéformé.obj");
         
 
         m_texture= read_texture(0, "data/debug2x2red.png");
+        m_text_terrain= read_texture(0, "data/projet/sale2text.png");
+        text_lit = read_texture(0, "data/projet/lit.png");
 
+        shad.init();
         // etat openGL par defaut
         glClearColor(0.2f, 0.2f, 0.2f, 1.f);        // couleur par defaut de la fenetre
         
@@ -40,6 +45,7 @@ public:
         CC.getCam().lookAt((Point)CC.position(),5);
         m_view=CC.getCam();
         
+        
 
         return 0;   // ras, pas d'erreur
     }
@@ -49,6 +55,7 @@ public:
     {
         m_objet.release();
         glDeleteTextures(1, &m_texture);
+        shad.quit();
         
         return 0;
     }
@@ -58,8 +65,10 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        draw(m_objet, CC.getCh2w(),m_view,m_texture);
-        draw(m_terrain, Identity() ,m_view,m_texture);
+        shad.edraw(m_objet,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture);
+        shad.edraw(lit, Scale(0.3,0.3,0.3) ,m_view,text_lit);
+        shad.edraw(m_terrain, Identity() ,m_view,m_text_terrain);
+        
         
         return 1;
     }
@@ -74,9 +83,13 @@ public:
 protected:
     Mesh m_objet;
     Mesh m_terrain;
+    Mesh lit;
     GLuint m_texture;
+    GLuint m_text_terrain;
+    GLuint text_lit;
     CharacterController CC;
     Orbiter m_view;
+    shader shad;
 };
 
 

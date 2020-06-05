@@ -131,6 +131,7 @@ OBJECTS := \
 	$(OBJDIR)/vec.o \
 	$(OBJDIR)/rgbe.o \
 	$(OBJDIR)/camera.o \
+	$(OBJDIR)/shader.o \
 	$(OBJDIR)/tuto7.o \
 	$(OBJDIR)/CharacterController.o \
 
@@ -260,6 +261,9 @@ $(OBJDIR)/rgbe.o: src/gKit/rgbe.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/camera.o: src/Projet-synthese/camera.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/shader.o: src/Projet-synthese/shader.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/tuto7.o: src/Projet-synthese/tuto7.cpp
