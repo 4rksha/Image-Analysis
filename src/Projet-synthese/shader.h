@@ -38,7 +38,7 @@ class shader
 public:
     void init();
     void reloade_program();
-    void edraw(Mesh & mesh,Transform  T,Orbiter  & camera,GLuint  & texture);
+    void edraw(Mesh & mesh,Transform  T,Orbiter  & camera,GLuint  & texture,Point luxPosition,Point Direction);
     void quit();
 
 protected :

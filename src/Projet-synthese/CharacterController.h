@@ -28,6 +28,8 @@ class CharacterController
 
 		Transform getCh2w();
 
+
+		Vector Position;
 	protected:
                 Transform m_ch2w;   // matrice du character vers le monde
                                     // le personnage se déplace vers X
@@ -36,7 +38,6 @@ class CharacterController
                                     
 		float m_v;          // le vecteur vitesse est m_v * m_ch2w * Vector(1,0,0)
 		float m_vMax;       // ne peut pas accélérer plus que m_vMax
-		Vector Position;
 		Camera camera;
 	};
 

@@ -31,6 +31,7 @@ void CharacterController::update(const float dt)
         m_ch2w=Translation(-direction() * m_v * 0.1) * m_ch2w;
         Vector p=position();
         camera.lookAt((Point)p,5);
+        Position=p;
     }
     else
     {
@@ -49,6 +50,7 @@ void CharacterController::update(const float dt)
         m_ch2w=Translation(direction() * m_v * 0.1) * m_ch2w;
         Vector p=position();
         camera.lookAt((Point)p,5);
+        Position=p;
     }
     else
     {

@@ -47,7 +47,7 @@ void shader::quit()
     release_program(program);
 }
 
-void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture)
+void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Point luxPosition,Point Direction)
 {
     // recupere les transformations
     
@@ -83,6 +83,8 @@ void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture)
     program_uniform(program, "mvMatrix", mv);
     program_uniform(program, "mvInvMatrix", mv.inverse());
     program_uniform(program, "normalMatrix", mv.normal());
+    program_uniform(program, "source", luxPosition);
+    program_uniform(program,"direction",Point(0,0,0)-Direction);
 
     char uniform[1024];
     sprintf(uniform, "diffuse_color");

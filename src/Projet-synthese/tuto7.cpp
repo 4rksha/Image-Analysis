@@ -65,9 +65,11 @@ public:
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
-        shad.edraw(m_objet,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture);
-        shad.edraw(lit, Scale(0.3,0.3,0.3) ,m_view,text_lit);
-        shad.edraw(m_terrain, Identity() ,m_view,m_text_terrain);
+        Point luxPosition=(Point)CC.Position;
+        Point Direction=(Point)CC.direction();
+        shad.edraw(m_objet,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture,luxPosition,Direction);
+        shad.edraw(lit, Scale(0.3,0.3,0.3) ,m_view,text_lit,luxPosition,Direction);
+        shad.edraw(m_terrain, Identity() ,m_view,m_text_terrain,luxPosition,Direction);
         
         
         return 1;
