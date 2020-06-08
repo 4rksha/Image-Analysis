@@ -10,6 +10,7 @@
 #include "CharacterController.h"
 #include "glcore.h"
 #include "shader.h"
+#include "Objet.h"
 
 
 
@@ -22,14 +23,16 @@ public:
     // creation des objets de l'application
     int init( )
     {
-        m_objet= read_mesh("data/cube.obj");
-        m_terrain= read_mesh("data/projet/sale2.obj");
-        lit= read_mesh("data/projet/litdéformé.obj");
+        m_objet.mesh= read_mesh("data/cube.obj");
+        m_terrain.mesh= read_mesh("data/projet/sale2.obj");
+        m_terrain2.mesh= read_mesh("data/projet/terrain2.obj");
+        lit.mesh= read_mesh("data/projet/litdéformé.obj");
         
 
         m_texture= read_texture(0, "data/debug2x2red.png");
         m_text_terrain= read_texture(0, "data/projet/sale2text.png");
         text_lit = read_texture(0, "data/projet/lit.png");
+        m_text_terrain2= read_texture(0, "data/projet/textureTerrain.png");
 
         shad.init();
         // etat openGL par defaut
@@ -53,7 +56,10 @@ public:
     // destruction des objets de l'application
     int quit( )
     {
-        m_objet.release();
+        m_objet.mesh.release();
+        lit.mesh.release();
+        m_terrain.mesh.release();
+        m_terrain2.mesh.release();
         glDeleteTextures(1, &m_texture);
         shad.quit();
         
@@ -67,10 +73,10 @@ public:
         
         Point luxPosition=(Point)CC.Position;
         Point Direction=(Point)CC.direction();
-        shad.edraw(m_objet,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture,luxPosition,Direction);
-        shad.edraw(lit, Scale(0.3,0.3,0.3) ,m_view,text_lit,luxPosition,Direction);
-        shad.edraw(m_terrain, Identity() ,m_view,m_text_terrain,luxPosition,Direction);
-        
+        shad.edraw(m_objet.mesh,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture,luxPosition,Direction);
+        shad.edraw(lit.mesh, Scale(0.3,0.3,0.3) ,m_view,text_lit,luxPosition,Direction);
+        shad.edraw(m_terrain.mesh, Identity() ,m_view,m_text_terrain,luxPosition,Direction);
+        shad.edraw(m_terrain2.mesh, Translation(0,-2,0)*Scale(20,10,20) ,m_view,m_text_terrain2,luxPosition,Direction);
         
         return 1;
     }
@@ -83,11 +89,13 @@ public:
 
 
 protected:
-    Mesh m_objet;
-    Mesh m_terrain;
-    Mesh lit;
+    Objet m_objet;
+    Objet m_terrain;
+    Objet m_terrain2;
+    Objet lit;
     GLuint m_texture;
     GLuint m_text_terrain;
+    GLuint m_text_terrain2;
     GLuint text_lit;
     CharacterController CC;
     Orbiter m_view;
