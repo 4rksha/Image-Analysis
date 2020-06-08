@@ -8,6 +8,7 @@
 #include "draw.h"        
 #include "app.h"  
 #include "CharacterController.h"
+#include "audio.h" 
 #include "glcore.h"
 #include "shader.h"
 #include "Objet.h"
@@ -43,6 +44,7 @@ public:
         m_objet.cube[0].set_position(pmax,pmin);
 
         shad.init();
+        aud.audio_Init();
         // etat openGL par defaut
         glClearColor(0.2f, 0.2f, 0.2f, 1.f);        // couleur par defaut de la fenetre
         
@@ -70,6 +72,7 @@ public:
         m_terrain2.mesh.release();
         glDeleteTextures(1, &m_texture);
         shad.quit();
+        aud.audio_Quit();
         
         return 0;
     }
@@ -138,6 +141,7 @@ protected:
     CharacterController CC;
     Orbiter m_view;
     shader shad;
+    audio aud;
 };
 
 

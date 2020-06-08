@@ -23,13 +23,13 @@ ifeq ($(config),debug64)
   OBJDIR     = obj/x64/debug
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/Projet-synthese
-  DEFINES   += -DDEBUG
-  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese
+  DEFINES   += -DDEBUG -DWITH_SDL2_STATIC
+  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese -Ilibs/soloud20200207/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g -m64 -mtune=native -march=native -std=c++11 -W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -pipe -g
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -m64 -L/usr/lib64 -g
-  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU
+  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -45,13 +45,13 @@ ifeq ($(config),release64)
   OBJDIR     = obj/x64/release
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/Projet-synthese
-  DEFINES   += 
-  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese
+  DEFINES   += -DWITH_SDL2_STATIC
+  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese -Ilibs/soloud20200207/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O3 -m64 -mtune=native -march=native -std=c++11 -W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -pipe -fopenmp -flto
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s -m64 -L/usr/lib64 -fopenmp -flto
-  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU
+  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -67,13 +67,13 @@ ifeq ($(config),debug32)
   OBJDIR     = obj/x32/debug
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/Projet-synthese
-  DEFINES   += -DDEBUG
-  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese
+  DEFINES   += -DDEBUG -DWITH_SDL2_STATIC
+  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese -Ilibs/soloud20200207/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -g -m32 -mtune=native -march=native -std=c++11 -W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -pipe -g
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -m32 -L/usr/lib32 -g
-  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU
+  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -89,13 +89,13 @@ ifeq ($(config),release32)
   OBJDIR     = obj/x32/release
   TARGETDIR  = bin
   TARGET     = $(TARGETDIR)/Projet-synthese
-  DEFINES   += 
-  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese
+  DEFINES   += -DWITH_SDL2_STATIC
+  INCLUDES  += -I. -Isrc/gKit -Isrc/Projet-synthese -Ilibs/soloud20200207/include
   CPPFLAGS  += -MMD -MP $(DEFINES) $(INCLUDES)
   CFLAGS    += $(CPPFLAGS) $(ARCH) -O3 -m32 -mtune=native -march=native -std=c++11 -W -Wall -Wextra -Wsign-compare -Wno-unused-parameter -Wno-unused-function -Wno-unused-variable -pipe -fopenmp -flto
   CXXFLAGS  += $(CFLAGS) 
   LDFLAGS   += -s -m32 -L/usr/lib32 -fopenmp -flto
-  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU
+  LIBS      += -lGLEW -lSDL2 -lSDL2_image -lGL -lGLU -lpthread
   RESFLAGS  += $(DEFINES) $(INCLUDES) 
   LDDEPS    += 
   LINKCMD    = $(CXX) -o $(TARGET) $(OBJECTS) $(LDFLAGS) $(RESOURCES) $(ARCH) $(LIBS)
@@ -133,9 +133,34 @@ OBJECTS := \
 	$(OBJDIR)/camera.o \
 	$(OBJDIR)/shader.o \
 	$(OBJDIR)/Cube.o \
+	$(OBJDIR)/audio.o \
 	$(OBJDIR)/Objet.o \
 	$(OBJDIR)/tuto7.o \
 	$(OBJDIR)/CharacterController.o \
+	$(OBJDIR)/soloud_core_basicops.o \
+	$(OBJDIR)/soloud_fft_lut.o \
+	$(OBJDIR)/soloud_bus.o \
+	$(OBJDIR)/soloud_audiosource.o \
+	$(OBJDIR)/soloud_file.o \
+	$(OBJDIR)/soloud_core_voicegroup.o \
+	$(OBJDIR)/soloud_core_3d.o \
+	$(OBJDIR)/soloud_thread.o \
+	$(OBJDIR)/soloud_core_getters.o \
+	$(OBJDIR)/soloud_queue.o \
+	$(OBJDIR)/soloud_core_filterops.o \
+	$(OBJDIR)/soloud_core_voiceops.o \
+	$(OBJDIR)/soloud.o \
+	$(OBJDIR)/soloud_fader.o \
+	$(OBJDIR)/soloud_core_faderops.o \
+	$(OBJDIR)/soloud_fft.o \
+	$(OBJDIR)/soloud_core_setters.o \
+	$(OBJDIR)/soloud_filter.o \
+	$(OBJDIR)/soloud_misc.o \
+	$(OBJDIR)/dr_impl.o \
+	$(OBJDIR)/soloud_wav.o \
+	$(OBJDIR)/soloud_wavstream.o \
+	$(OBJDIR)/stb_vorbis.o \
+	$(OBJDIR)/soloud_sdl2_static.o \
 
 RESOURCES := \
 
@@ -271,6 +296,9 @@ $(OBJDIR)/shader.o: src/Projet-synthese/shader.cpp
 $(OBJDIR)/Cube.o: src/Projet-synthese/Cube.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/audio.o: src/Projet-synthese/audio.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/Objet.o: src/Projet-synthese/Objet.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
@@ -278,6 +306,78 @@ $(OBJDIR)/tuto7.o: src/Projet-synthese/tuto7.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/CharacterController.o: src/Projet-synthese/CharacterController.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_basicops.o: libs/soloud20200207/src/core/soloud_core_basicops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_fft_lut.o: libs/soloud20200207/src/core/soloud_fft_lut.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_bus.o: libs/soloud20200207/src/core/soloud_bus.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_audiosource.o: libs/soloud20200207/src/core/soloud_audiosource.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_file.o: libs/soloud20200207/src/core/soloud_file.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_voicegroup.o: libs/soloud20200207/src/core/soloud_core_voicegroup.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_3d.o: libs/soloud20200207/src/core/soloud_core_3d.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_thread.o: libs/soloud20200207/src/core/soloud_thread.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_getters.o: libs/soloud20200207/src/core/soloud_core_getters.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_queue.o: libs/soloud20200207/src/core/soloud_queue.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_filterops.o: libs/soloud20200207/src/core/soloud_core_filterops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_voiceops.o: libs/soloud20200207/src/core/soloud_core_voiceops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud.o: libs/soloud20200207/src/core/soloud.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_fader.o: libs/soloud20200207/src/core/soloud_fader.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_faderops.o: libs/soloud20200207/src/core/soloud_core_faderops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_fft.o: libs/soloud20200207/src/core/soloud_fft.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_setters.o: libs/soloud20200207/src/core/soloud_core_setters.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_filter.o: libs/soloud20200207/src/core/soloud_filter.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_misc.o: libs/soloud20200207/src/core/soloud_misc.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/dr_impl.o: libs/soloud20200207/src/audiosource/wav/dr_impl.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_wav.o: libs/soloud20200207/src/audiosource/wav/soloud_wav.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_wavstream.o: libs/soloud20200207/src/audiosource/wav/soloud_wavstream.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/stb_vorbis.o: libs/soloud20200207/src/audiosource/wav/stb_vorbis.c
+	@echo $(notdir $<)
+	$(SILENT) $(CC) $(CFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_sdl2_static.o: libs/soloud20200207/src/backend/sdl2_static/soloud_sdl2_static.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 

@@ -77,6 +77,10 @@ void main( )
     {
 	i=1;
     }
+    if(cone_dist>3)
+    {
+	i=0;
+    }
 
     
     vec4 colore= texture(diffuse_color, vertex_texcoord);
