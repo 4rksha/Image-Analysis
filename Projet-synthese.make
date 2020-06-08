@@ -132,6 +132,8 @@ OBJECTS := \
 	$(OBJDIR)/rgbe.o \
 	$(OBJDIR)/camera.o \
 	$(OBJDIR)/shader.o \
+	$(OBJDIR)/Cube.o \
+	$(OBJDIR)/Objet.o \
 	$(OBJDIR)/tuto7.o \
 	$(OBJDIR)/CharacterController.o \
 
@@ -264,6 +266,12 @@ $(OBJDIR)/camera.o: src/Projet-synthese/camera.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/shader.o: src/Projet-synthese/shader.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/Cube.o: src/Projet-synthese/Cube.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/Objet.o: src/Projet-synthese/Objet.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/tuto7.o: src/Projet-synthese/tuto7.cpp

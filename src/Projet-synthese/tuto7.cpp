@@ -34,6 +34,14 @@ public:
         text_lit = read_texture(0, "data/projet/lit.png");
         m_text_terrain2= read_texture(0, "data/projet/textureTerrain.png");
 
+        m_objet.setNumberCube(1);
+        Point pmin,pmax;
+        m_objet.mesh.bounds(pmin, pmax);
+        m_objet.cube[0].set_position(pmax,pmin);
+        lit.setNumberCube(1);
+        lit.mesh.bounds(pmin,pmax);
+        m_objet.cube[0].set_position(pmax,pmin);
+
         shad.init();
         // etat openGL par defaut
         glClearColor(0.2f, 0.2f, 0.2f, 1.f);        // couleur par defaut de la fenetre
@@ -65,6 +73,15 @@ public:
         
         return 0;
     }
+
+    void box_transform(Transform T,Objet m)
+    {
+        for(int i=0;i<m.cube.size();i++)
+        {
+            Cube c=m.cube[i];
+            c.set_position(T(c.get_pmax()),T(c.get_pmin()));
+        }
+    }
     
     // dessiner une nouvelle image
     int render( )
@@ -74,15 +91,36 @@ public:
         Point luxPosition=(Point)CC.Position;
         Point Direction=(Point)CC.direction();
         shad.edraw(m_objet.mesh,CC.getCh2w()*Scale(0.4,0.4,0.4),m_view,m_texture,luxPosition,Direction);
-        shad.edraw(lit.mesh, Scale(0.3,0.3,0.3) ,m_view,text_lit,luxPosition,Direction);
+        box_transform(CC.getCh2w()*Scale(0.4,0.4,0.4),m_objet);
+        shad.edraw(lit.mesh, Translation(0,0,-6)*Scale(0.3,0.3,0.3) ,m_view,text_lit,luxPosition,Direction);
+        box_transform(Translation(0,0,-6)*Scale(0.3,0.3,0.3),lit);
         shad.edraw(m_terrain.mesh, Identity() ,m_view,m_text_terrain,luxPosition,Direction);
+        box_transform(Identity(),m_terrain);
         shad.edraw(m_terrain2.mesh, Translation(0,-2,0)*Scale(20,10,20) ,m_view,m_text_terrain2,luxPosition,Direction);
+        box_transform(Translation(0,-2,0)*Scale(20,10,20),m_terrain2);
         
         return 1;
     }
 
+    int CalculateContact(Objet m)
+    {
+        int n=0;
+        for(int i=0;i<m.cube.size();i++)
+        {
+            n=m_objet.cube[0].calculate_collision(m.cube[i]);
+        }
+        return n;
+    }
+
     int update(const float time, const float delta ){
-        CC.update(delta);
+        int n=0;
+        n=CalculateContact(m_terrain);
+        n=CalculateContact(lit);
+
+        if(n==0)
+        {
+            CC.update(delta);
+        }
         m_view=CC.getCam();
         return 1;
     }

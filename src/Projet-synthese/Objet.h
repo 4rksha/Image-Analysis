@@ -4,6 +4,7 @@
 
 #include "mesh.h"
 #include "Cube.h"
+#include <vector>
 
 class Objet
 {
@@ -11,18 +12,13 @@ private:
    
 public:
     Mesh mesh; 
-    Cube cube;
+    std::vector<Cube> cube;
     Objet();
     ~Objet();
+    void setNumberCube(int n);
 };
 
-Objet::Objet()
-{
-}
 
-Objet::~Objet()
-{
-}
 
 
 #endif
