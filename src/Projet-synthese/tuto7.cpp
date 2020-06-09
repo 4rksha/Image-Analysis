@@ -125,6 +125,18 @@ public:
             CC.update(delta);
         }
         m_view=CC.getCam();
+        static int controleMusic=0;
+
+        if((key_state('s') || key_state('z') || key_state('q') || key_state('d')) && controleMusic==0)
+        {
+            controleMusic=1;
+            aud.play_audio(aud.getWav());
+        }
+        if(!(key_state('s') || key_state('z') || key_state('q') || key_state('d')) && controleMusic==1)
+        {
+            controleMusic=0;
+            aud.pause_audio(aud.getWav());
+        }
         return 1;
     }
 

@@ -13,6 +13,9 @@ public:
     audio();
     ~audio();
     int audio_Init();
+    void play_audio(SoLoud::Wav & b);
+    void pause_audio(SoLoud::Wav & b);
+    SoLoud::Wav & getWav();
     void audio_Quit();
 };
 
