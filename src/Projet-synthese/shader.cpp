@@ -8,7 +8,7 @@
 void shader::init()
 {
     program= 0;
-    program_filename= Filename("data/projet/shader7.glsl");
+    program_filename= Filename("data/projet/shader/shader7.glsl");
     reloade_program();
     glUseProgram(0);
     glBindTexture(GL_TEXTURE_2D, 0);
@@ -69,20 +69,11 @@ void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Poin
     // affecte une valeur aux uniforms
     // transformations standards
     program_uniform(program, "modelMatrix", model);
-    program_uniform(program, "modelInvMatrix", model.inverse());
-    program_uniform(program, "viewMatrix", view);
     program_uniform(program, "viewInvMatrix", view.inverse());
-    program_uniform(program, "projectionMatrix", projection);
-    program_uniform(program, "projectionInvMatrix", projection.inverse());
-    program_uniform(program, "viewportMatrix", viewport);
-    program_uniform(program, "viewportInvMatrix", viewport.inverse());
+
     
     program_uniform(program, "mvpMatrix", mvp);
-    program_uniform(program, "mvpInvMatrix", mvpInv);
     
-    program_uniform(program, "mvMatrix", mv);
-    program_uniform(program, "mvInvMatrix", mv.inverse());
-    program_uniform(program, "normalMatrix", mv.normal());
     program_uniform(program, "source", luxPosition);
     program_uniform(program,"direction",Point(0,0,0)-Direction);
 

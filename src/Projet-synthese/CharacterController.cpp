@@ -12,11 +12,11 @@ void CharacterController::update(const float dt)
 {
     if (key_state('q') && !key_state('s'))
     {
-        turnXZ(-1);
+        turnXZ(1);
     }
     if(key_state('d') && !key_state('q'))
     {
-        turnXZ(1);
+        turnXZ(-1);
     }
     if(key_state('z') && !key_state('s'))
     {
