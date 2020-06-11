@@ -87,6 +87,7 @@ public:
         canape.mesh.release();
         vase.mesh.release();
         vaseC.mesh.release();
+        CouteauSang.mesh.release();
         glDeleteTextures(1, &m_texture);
         glDeleteTextures(1, &m_text_terrain2);
         glDeleteTextures(1, &m_text_terrain);
@@ -95,6 +96,7 @@ public:
         glDeleteTextures(1, &tCanape);
         glDeleteTextures(1, &tVase);
         glDeleteTextures(1, &text_lit);
+        glDeleteTextures(1, &tCouteau);
         shad.quit();
         aud.audio_Quit();
         
