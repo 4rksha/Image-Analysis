@@ -57,19 +57,17 @@ void main( )
     float cone_radius = (cone_dist / h) * r;
     float orth_distance = length((p - source) - cone_dist * direction);
    
-    int i=0;
-    if(orth_distance<cone_radius+0.005)
+    float i=0.0;
+    if(orth_distance<1.5*cone_radius+0.005)
     {
-	    i=1;
+	    i=1.0-(orth_distance-cone_radius)/cone_radius;
     }
     if(cone_dist>4)
     {
-	    i=0;
+	    i=0.0;
     }
     //i=1;
 
-    if(i==1)
-    {
         vec4 color= texture(diffuse_color, vertex_texcoord);
         vec3 colore = vec3(color);
 
@@ -88,14 +86,11 @@ void main( )
         spec = pow(max(dot(normal, halfwayDir), 0.0), 64.0);
         vec3 specular = spec * lightColor;    
         // calculate shadow     
-        vec3 lighting = (ambient + (diffuse + specular)) * colore;
+        vec3 lighting = (ambient + (diffuse + specular)) * colore*i;
         
         vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * lighting; 
         
         fragment_color= vec4(MaterialAmbientColor + lighting, 1);
-    }
-    else
-    fragment_color=vec4(0,0,0,0);
 }
 #endif
 

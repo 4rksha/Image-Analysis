@@ -35,6 +35,7 @@ public:
         vase.mesh=read_mesh("data/projet/mesh/vase.obj");
         vaseC.mesh=read_mesh("data/projet/mesh/vasecassé.obj");
         CouteauSang.mesh=read_mesh("data/projet/mesh/couteausang.obj");
+        Shelf.mesh=read_mesh("data/projet/mesh/shelf_pleine.obj");
 
         m_texture= read_texture(0, "data/debug2x2red.png");
         m_text_terrain= read_texture(0, "data/projet/img/sale2text.png");
@@ -45,6 +46,7 @@ public:
         tCanape=read_texture(0, "data/projet/img/textCanapé.png");
         tVase=read_texture(0, "data/projet/img/testVase1.png");
         tCouteau=read_texture(0, "data/projet/img/couteau.png");
+        textFull=read_texture(0, "data/projet/img/shelf_pleine.png");
 
         m_objet.setNumberCube(1);
         Point pmin,pmax;
@@ -88,6 +90,7 @@ public:
         vase.mesh.release();
         vaseC.mesh.release();
         CouteauSang.mesh.release();
+        Shelf.mesh.release();
         glDeleteTextures(1, &m_texture);
         glDeleteTextures(1, &m_text_terrain2);
         glDeleteTextures(1, &m_text_terrain);
@@ -97,6 +100,7 @@ public:
         glDeleteTextures(1, &tVase);
         glDeleteTextures(1, &text_lit);
         glDeleteTextures(1, &tCouteau);
+        glDeleteTextures(1, &textFull);
         shad.quit();
         aud.audio_Quit();
         
@@ -135,6 +139,7 @@ public:
         shad.edraw(vaseC.mesh,Translation(5.5,0.1,-5)*RotationX(-75)*Scale(0.2,0.2,0.2),m_view,tVase,luxPosition,Direction);
         shad.edraw(CouteauSang.mesh,Translation(-1,0.7,-7)*RotationX(-90)*Scale(0.05,0.05,0.05),m_view,tCouteau,luxPosition,Direction);
         shad.edraw(CouteauSang.mesh,Translation(1,0.7,-7)*RotationX(90)*RotationY(180)*Scale(0.05,0.05,0.05),m_view,tCouteau,luxPosition,Direction);
+        shad.edraw(Shelf.mesh,Translation(-5,0,-1)*RotationY(90)*Scale(0.3,0.3,0.3),m_view,textFull,luxPosition,Direction);
         return 1;
     }
 
@@ -186,6 +191,7 @@ protected:
     Objet vase;
     Objet vaseC;
     Objet CouteauSang;
+    Objet Shelf;
     GLuint m_texture;
     GLuint m_text_terrain;
     GLuint m_text_terrain2;
@@ -195,6 +201,7 @@ protected:
     GLuint tCanape;
     GLuint tVase;
     GLuint tCouteau;
+    GLuint textFull;
     CharacterController CC;
     Orbiter m_view;
     shader shad;
