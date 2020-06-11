@@ -57,6 +57,7 @@ vec4 CelShading ( vec4 color, vec3 LightDir ,int i)
 		if ( Intensity > 0.25 && Intensity <0.5 ) factor = 0.5;
 		if ( Intensity > 0.5 && Intensity <0.75 ) factor = 0.75;
 		if ( Intensity > 0.75 ) factor = 1;
+        //factor=1;
 	}
 	color *= vec4 ( factor, factor, factor, 1.0 );
 
@@ -85,7 +86,7 @@ void main( )
     
     vec4 colore= texture(diffuse_color, vertex_texcoord);
 
-    vec3 lightDir = normalize(-direction);
+    vec3 lightDir = normalize(direction);
    
     vec4 lighting = CelShading(colore,lightDir,i);  
     

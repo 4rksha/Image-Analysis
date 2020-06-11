@@ -28,12 +28,14 @@ public:
         m_terrain.mesh= read_mesh("data/projet/sale2.obj");
         m_terrain2.mesh= read_mesh("data/projet/terrain2.obj");
         lit.mesh= read_mesh("data/projet/litdéformé.obj");
+        cheval.mesh=read_mesh("data/projet/chevalabasculedéformé.obj");
         
 
         m_texture= read_texture(0, "data/debug2x2red.png");
         m_text_terrain= read_texture(0, "data/projet/sale2text.png");
         text_lit = read_texture(0, "data/projet/lit.png");
         m_text_terrain2= read_texture(0, "data/projet/textureTerrain.png");
+        textChev=read_texture(0, "data/projet/textCheval.png");
 
         m_objet.setNumberCube(1);
         Point pmin,pmax;
@@ -70,6 +72,7 @@ public:
         lit.mesh.release();
         m_terrain.mesh.release();
         m_terrain2.mesh.release();
+        cheval.mesh.release();
         glDeleteTextures(1, &m_texture);
         shad.quit();
         aud.audio_Quit();
@@ -101,6 +104,7 @@ public:
         box_transform(Identity(),m_terrain);
         shad.edraw(m_terrain2.mesh, Translation(0,-2,0)*Scale(20,10,20) ,m_view,m_text_terrain2,luxPosition,Direction);
         box_transform(Translation(0,-2,0)*Scale(20,10,20),m_terrain2);
+        shad.edraw(cheval.mesh,Translation(2,0,-6)*Scale(0.2,0.2,0.2),m_view,textChev,luxPosition,Direction);
         
         return 1;
     }
@@ -146,10 +150,12 @@ protected:
     Objet m_terrain;
     Objet m_terrain2;
     Objet lit;
+    Objet cheval;
     GLuint m_texture;
     GLuint m_text_terrain;
     GLuint m_text_terrain2;
     GLuint text_lit;
+    GLuint textChev;
     CharacterController CC;
     Orbiter m_view;
     shader shad;
