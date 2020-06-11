@@ -9,6 +9,7 @@ class audio
 private:
     SoLoud::Soloud soloud;
     SoLoud::Wav boom;
+    SoLoud::Wav pluie;
 public:
     audio();
     ~audio();

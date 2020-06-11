@@ -14,8 +14,10 @@ int audio::audio_Init()
 {
     soloud.init(); 
     boom.setLooping(1);
-    boom.load("data/projet/audio/2.wav");
-
+    boom.load("data/projet/audio/pas.wav");
+    pluie.setLooping(1);
+    pluie.load("data/projet/audio/pluie.wav");
+    soloud.play(pluie);
     return 0;
 }
 
