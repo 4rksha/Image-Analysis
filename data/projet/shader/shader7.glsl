@@ -66,11 +66,16 @@ void main( )
             i=1.0;
         }
     }
-    if(cone_dist>4)
+    float center_dist=length(p-source);
+    if(center_dist>2)
     {
-	    i=0.0;
+	    i=i-(center_dist-2)/3;
+        if(i<0.0)
+        {
+            i=0.0;
+        }
     }
-    //i=1;
+    
 
         vec4 color= texture(diffuse_color, vertex_texcoord);
         vec3 colore = vec3(color);
