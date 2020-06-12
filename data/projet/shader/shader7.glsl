@@ -60,7 +60,7 @@ void main( )
     float i=0.0;
     if(orth_distance<2*cone_radius+0.005)
     {
-	    i=1.0-(orth_distance-cone_radius)/cone_radius;
+	    i=1.0-(orth_distance)/(2*cone_radius);
         if(i>=1.0)
         {
             i=1.0;
