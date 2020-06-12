@@ -134,7 +134,7 @@ public:
         shad.edraw(cheval.mesh,Translation(2,0,3)*Scale(0.2,0.2,0.2),m_view,textChev,luxPosition,Direction);
         shad.edraw(coussin1.mesh,Translation(4,0,2)*Scale(0.3,0.3,0.3),m_view,textCoussin,luxPosition,Direction);
         shad.edraw(coussin2.mesh,Translation(4,0,3.5)*Scale(0.3,0.3,0.3),m_view,textCoussin,luxPosition,Direction);
-        shad.edraw(canape.mesh,Translation(5.5,0,3.5)*Scale(0.5,0.5,0.5),m_view,tCanape,luxPosition,Direction);
+        shad.edraw(canape.mesh,Translation(5.5,0,3.5)*Scale(0.4,0.4,0.4),m_view,tCanape,luxPosition,Direction);
         shad.edraw(vase.mesh,Translation(5,0,-6)*Scale(0.2,0.2,0.2),m_view,tVase,luxPosition,Direction);
         shad.edraw(vaseC.mesh,Translation(5.5,0.1,-5)*RotationX(-75)*Scale(0.2,0.2,0.2),m_view,tVase,luxPosition,Direction);
         shad.edraw(CouteauSang.mesh,Translation(-1,0.7,-7)*RotationX(-90)*Scale(0.05,0.05,0.05),m_view,tCouteau,luxPosition,Direction);
@@ -181,6 +181,19 @@ public:
         {
             aud.play_audio(aud.getVase());
             controleVase=1;
+        }
+
+        static int controleSaut=0;
+
+        if(length(CC.Position-Vector(5.5,0,3.5))<4 && controleSaut==0)
+        {
+            controleSaut=1;
+            aud.play_audio(aud.getSaut());
+        }
+        if(!(length(CC.Position-Vector(5.5,0,3.5))<4) && controleSaut==1)
+        {
+            controleSaut=0;
+            aud.pause_audio(aud.getSaut());
         }
         return 1;
     }
