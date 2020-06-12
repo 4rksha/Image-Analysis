@@ -39,7 +39,7 @@ const float k= 3;
 const float alpha=3;
 const float PI= 3.14159265359;
 const float h=3;
-const float r=1;
+const float r=0.5;
 
 uniform sampler2D diffuse_color;
 uniform vec3 source;
@@ -60,7 +60,7 @@ void main( )
     float i=0.0;
     if(orth_distance<2*cone_radius+0.005)
     {
-	    i=1.0-(orth_distance)/(2*cone_radius);
+	    i=1.0-(orth_distance-cone_radius)/(2*cone_radius);
         if(i>=1.0)
         {
             i=1.0;
