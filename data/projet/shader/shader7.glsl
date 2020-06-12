@@ -69,7 +69,7 @@ void main( )
     float center_dist=length(p-source);
     if(center_dist>2)
     {
-	    i=i-(center_dist-2)/3;
+	    i=i-(center_dist-2)/2;
         if(i<0.0)
         {
             i=0.0;
