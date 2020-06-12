@@ -10,6 +10,7 @@ private:
     SoLoud::Soloud soloud;
     SoLoud::Wav boom;
     SoLoud::Wav pluie;
+    SoLoud::Wav vase;
 public:
     audio();
     ~audio();
@@ -17,6 +18,7 @@ public:
     void play_audio(SoLoud::Wav & b);
     void pause_audio(SoLoud::Wav & b);
     SoLoud::Wav & getWav();
+    SoLoud::Wav & getVase();
     void audio_Quit();
 };
 

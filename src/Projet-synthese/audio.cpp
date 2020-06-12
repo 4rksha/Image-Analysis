@@ -17,6 +17,7 @@ int audio::audio_Init()
     boom.load("data/projet/audio/pas.wav");
     pluie.setLooping(1);
     pluie.load("data/projet/audio/pluie.wav");
+    vase.load("data/projet/audio/vase.wav");
     soloud.play(pluie);
     return 0;
 }
@@ -24,6 +25,10 @@ int audio::audio_Init()
 SoLoud::Wav & audio::getWav()
 {
     return boom;
+}
+SoLoud::Wav & audio::getVase()
+{
+    return vase;
 }
 
 void audio::play_audio(SoLoud::Wav & b)

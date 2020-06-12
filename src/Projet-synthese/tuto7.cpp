@@ -175,6 +175,13 @@ public:
             controleMusic=0;
             aud.pause_audio(aud.getWav());
         }
+
+        static int controleVase=0;
+        if(length(CC.Position-Vector(5,0,-6))<6 && controleVase==0)
+        {
+            aud.play_audio(aud.getVase());
+            controleVase=1;
+        }
         return 1;
     }
 
