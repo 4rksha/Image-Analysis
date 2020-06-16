@@ -40,21 +40,16 @@ const float alpha=3;
 const float PI= 3.14159265359;
 const float h=3;
 const float r=0.5;
-float a=1;
-float f=100;
 
 uniform sampler2D diffuse_color;
 uniform vec3 source;
 uniform vec3 direction;
-uniform int foudre;
-uniform float time;
 
 out vec4 fragment_color;
 
 
 void main( )
 {
-    float flameVar= 0.1*a*cos(2*3.1415*f*time);
     vec3 camera= vec3(viewInvMatrix * vec4(0, 0, 0, 1));        // position de la camera dans le repere du monde
 
     //vec3  colore = vec3(0,0,1);
@@ -62,8 +57,8 @@ void main( )
     float cone_radius = (cone_dist / h) * r;
     float orth_distance = length((p - source) - cone_dist * direction);
    
-    float i=0.0;
-    if(orth_distance<2*cone_radius+0.005)
+    float i=0.1;
+    if(orth_distance<2*cone_radius+0.05)
     {
 	    i=1.0-(orth_distance-cone_radius)/(2*cone_radius);
         if(i>=1.0)
@@ -72,17 +67,13 @@ void main( )
         }
     }
     float center_dist=length(p-source);
-    if(center_dist>2+flameVar)
+    if(center_dist>2)
     {
-	    i=i-(center_dist-(2+flameVar))/(2+flameVar);
-        if(i<0.0)
+	    i=i-(center_dist-2)/2;
+        if(i<0.05)
         {
-            i=0.0;
+            i=0.05;
         }
-    }
-    if(foudre<=500)
-    {
-	    i=1;
     }
     
 
@@ -91,6 +82,9 @@ void main( )
 
         vec3 normal = normalize(n);
         vec3 lightColor = vec3(1.0);
+        if (i == 0.05) {
+            lightColor = vec3(0.f, 0.f, 1.f);
+        }
         // ambient
         vec3 ambient = 0.5 * colore;
         // diffuse
@@ -103,8 +97,8 @@ void main( )
         vec3 halfwayDir = normalize(lightDir + viewDir);  
         spec = pow(max(dot(normal, halfwayDir), 0.0), 64.0);
         vec3 specular = spec * lightColor;    
-        // calculate shadow     
-        vec3 lighting = (ambient + (diffuse + specular)) * colore*i;
+        // calculate shadow  
+        vec3 lighting = (ambient + (diffuse + specular)) * colore * i;
         
         vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * lighting; 
         

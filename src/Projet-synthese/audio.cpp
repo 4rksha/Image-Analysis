@@ -14,7 +14,7 @@ int audio::audio_Init()
 {
     soloud.init(); 
     boom.setLooping(1);
-    boom.load("data/projet/audio/pas.wav");
+    boom.load("data/projet/audio/pas2.wav");
     pluie.setLooping(1);
     pluie.load("data/projet/audio/pluie.wav");
     vase.load("data/projet/audio/vase.wav");
