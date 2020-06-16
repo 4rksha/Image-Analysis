@@ -135,6 +135,7 @@ public:
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(480,250));
+        ImGui::SetNextWindowSize({100.0f, 30.0f});
         ImGui::Begin("Press E");
         ImGui::Text("............");
         ImGui::End();
@@ -147,6 +148,7 @@ public:
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(480,250));
+        ImGui::SetNextWindowSize({100.0f, 30.0f});
         ImGui::Begin("YOU WIN");
         ImGui::Text(".............");
         ImGui::End();
@@ -159,6 +161,7 @@ public:
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(480,250));
+        ImGui::SetNextWindowSize({100.0f, 30.0f});
         ImGui::Begin("YOU LOOSE");
         ImGui::Text("..............");
         ImGui::End();
