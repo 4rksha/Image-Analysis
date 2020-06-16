@@ -264,8 +264,7 @@ public:
             shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
             if (shad.foudreControle <= 500)
             {
-                shad.edraw(plane, CC.getCh2w() * Translation(0, 1, 0) * RotationX(45), m_view, texPlane[5 - countFoudre], luxPosition, Direction);
-                ;
+                shad.edraw(plane, Translation(CC.Position) * Translation(0, 1, 1) * RotationX(45)*Scale(1.5,1.5,1.5), m_view, texPlane[5 - countFoudre], luxPosition, Direction);
             }
         }
         if (controleindice == 1 && controlefin == 0)
