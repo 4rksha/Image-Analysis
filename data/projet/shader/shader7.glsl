@@ -80,7 +80,7 @@ void main( )
             i=0.0;
         }
     }
-    if(foudre<=200)
+    if(foudre<=500)
     {
 	    i=1;
     }

@@ -49,6 +49,7 @@ public:
         vaseC.mesh=read_mesh("data/projet/mesh/vasecassé.obj");
         CouteauSang.mesh=read_mesh("data/projet/mesh/couteausang.obj");
         Shelf.mesh=read_mesh("data/projet/mesh/shelf_pleine.obj");
+        plane=read_mesh("data/projet/mesh/plane.obj");
 
         m_texture= read_texture(0, "data/debug2x2red.png");
         m_text_terrain= read_texture(0, "data/projet/img/sale2text.png");
@@ -60,6 +61,13 @@ public:
         tVase=read_texture(0, "data/projet/img/testVase1.png");
         tCouteau=read_texture(0, "data/projet/img/couteau.png");
         textFull=read_texture(0, "data/projet/img/shelf_pleine.png");
+        for(int i=0;i<7;i++)
+        {
+            std::string s="data/projet/img/test";
+            s= s+std::to_string(i);
+            s=s+".png";
+            texPlane[i]=read_texture(0, s.c_str());
+        }
 
         m_objet.setNumberCube(1);
         Point pmin,pmax;
@@ -226,7 +234,7 @@ public:
         if(controlefin==0)
         {
             Point luxPosition;
-            if(shad.foudreControle>200)
+            if(shad.foudreControle>500)
             {
                 luxPosition=(Point)CC.Position;
             }
@@ -252,6 +260,10 @@ public:
             shad.edraw(CouteauSang.mesh,Translation(-1,0.7,-7)*RotationX(-90)*Scale(0.05,0.05,0.05),m_view,tCouteau,luxPosition,Direction);
             shad.edraw(CouteauSang.mesh,Translation(1,0.7,-7)*RotationX(90)*RotationY(180)*Scale(0.05,0.05,0.05),m_view,tCouteau,luxPosition,Direction);
             shad.edraw(Shelf.mesh,Translation(-5,0,-1)*RotationY(90)*Scale(0.3,0.3,0.3),m_view,textFull,luxPosition,Direction);
+            if(shad.foudreControle<=500)
+            {
+                shad.edraw(plane,CC.getCh2w()*Translation(0,1,0)*RotationX(45),m_view,texPlane[5-countFoudre],luxPosition,Direction);;
+            }
         }
         if(controleindice==1 && controlefin==0)
         {
@@ -350,7 +362,7 @@ public:
 
 
             static int controlePos=-1;
-            static int countFoudre=0;
+            
 
             verifPos(Vector(5.5,0,3.5),controlePos,0);
             verifPos(Vector(0,0,-6),controlePos,1);
@@ -449,6 +461,7 @@ protected:
     Objet vaseC;
     Objet CouteauSang;
     Objet Shelf;
+    Mesh plane;
     GLuint m_texture;
     GLuint m_text_terrain;
     GLuint m_text_terrain2;
@@ -459,6 +472,7 @@ protected:
     GLuint tVase;
     GLuint tCouteau;
     GLuint textFull;
+    GLuint texPlane[7];
     CharacterController CC;
     Orbiter m_view;
     shader shad;
@@ -467,6 +481,7 @@ protected:
     int controlefin=3;
     int controlePoss[6]={0};
     int dialogue=0;
+    int countFoudre=0;
 };
 
 
