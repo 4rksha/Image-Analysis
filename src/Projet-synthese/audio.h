@@ -12,6 +12,7 @@ private:
     SoLoud::Wav pluie;
     SoLoud::Wav vase;
     SoLoud::Wav saut;
+    SoLoud::Wav cri;
 public:
     audio();
     ~audio();
@@ -22,6 +23,7 @@ public:
     SoLoud::Wav & getVase();
     SoLoud::Wav & getSaut();
     SoLoud::Wav & getPluie();
+    SoLoud::Wav & getCri();
     void audio_Quit();
 };
 

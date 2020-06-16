@@ -368,10 +368,13 @@ public:
             if(shad.nbindice==6)
             {
                 controlefin=1;
+                aud.pause_audio(aud.getPluie());
             }
             if(countFoudre==6)
             {
                 controlefin=2;
+                aud.pause_audio(aud.getPluie());
+                aud.play_audio(aud.getCri());
             }
 
             static int controleMusic=0;
