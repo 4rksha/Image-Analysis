@@ -7,6 +7,7 @@
 
 void shader::init()
 {
+    widgets= create_widgets();
     program= 0;
     program_filename= Filename("data/projet/shader/shader7.glsl");
     reloade_program();
@@ -76,6 +77,8 @@ void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Poin
     
     program_uniform(program, "source", luxPosition);
     program_uniform(program,"direction",Point(0,0,0)-Direction);
+    program_uniform(program, "foudre", foudreControle);
+    program_uniform(program,"time",time);
 
     char uniform[1024];
     sprintf(uniform, "diffuse_color");
@@ -86,5 +89,12 @@ void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Poin
     
     // go
     glDrawArrays(GL_TRIANGLES, 0,mesh.vertex_count());
-    //draw(mesh, T ,camera);
+    
+    begin(widgets);
+    label(widgets, "indices collectes :");
+    begin_line(widgets);
+    label(widgets, "      %d/6", nbindice);
+    end(widgets);
+    
+    draw(widgets, window_width(), window_height());
 }

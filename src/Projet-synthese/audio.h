@@ -21,6 +21,7 @@ public:
     SoLoud::Wav & getWav();
     SoLoud::Wav & getVase();
     SoLoud::Wav & getSaut();
+    SoLoud::Wav & getPluie();
     void audio_Quit();
 };
 

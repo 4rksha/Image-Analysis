@@ -40,16 +40,21 @@ const float alpha=3;
 const float PI= 3.14159265359;
 const float h=3;
 const float r=0.5;
+float a=1;
+float f=100;
 
 uniform sampler2D diffuse_color;
 uniform vec3 source;
 uniform vec3 direction;
+uniform int foudre;
+uniform float time;
 
 out vec4 fragment_color;
 
 
 void main( )
 {
+    float flameVar= 0.1*a*cos(2*3.1415*f*time);
     vec3 camera= vec3(viewInvMatrix * vec4(0, 0, 0, 1));        // position de la camera dans le repere du monde
 
     //vec3  colore = vec3(0,0,1);
@@ -67,13 +72,17 @@ void main( )
         }
     }
     float center_dist=length(p-source);
-    if(center_dist>2)
+    if(center_dist>2+flameVar)
     {
-	    i=i-(center_dist-2)/2;
+	    i=i-(center_dist-(2+flameVar))/(2+flameVar);
         if(i<0.0)
         {
             i=0.0;
         }
+    }
+    if(foudre<=200)
+    {
+	    i=1;
     }
     
 

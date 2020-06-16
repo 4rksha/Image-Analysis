@@ -40,10 +40,13 @@ public:
     void reloade_program();
     void edraw(Mesh & mesh,Transform  T,Orbiter  & camera,GLuint  & texture,Point luxPosition,Point Direction);
     void quit();
-
+    int foudreControle;
+    int nbindice=0;
+    float time=0.0;
 protected :
     Filename program_filename;
     GLuint program;
+    Widgets widgets;
 
     // affichage des erreurs
     std::string program_log;

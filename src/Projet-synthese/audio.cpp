@@ -20,7 +20,6 @@ int audio::audio_Init()
     vase.load("data/projet/audio/vase.wav");
     saut.setLooping(1);
     saut.load("data/projet/audio/saut.wav");
-    soloud.play(pluie);
     return 0;
 }
 
@@ -35,6 +34,10 @@ SoLoud::Wav & audio::getVase()
 SoLoud::Wav & audio::getSaut()
 {
     return saut;
+}
+SoLoud::Wav & audio::getPluie()
+{
+    return pluie;
 }
 
 void audio::play_audio(SoLoud::Wav & b)

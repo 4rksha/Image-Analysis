@@ -10,7 +10,13 @@ master_projet_files = {	gfx_projet_dir .. "/src/Projet-synthese/*.cpp",
 							gfx_projet_dir .. "/libs/soloud20200207/src/audiosource/wav/*.c",
 							gfx_projet_dir .. "/libs/soloud20200207/src/backend/sdl2_static/*.cpp",
 							gfx_projet_dir .. "/src/Projet-synthese/*.h",
-							gfx_projet_dir .. "/libs/soloud20200207/include/*.h"
+							gfx_projet_dir .. "/libs/soloud20200207/include/*.h",
+							gfx_projet_dir .. "/libs/imgui-master/*.cpp",
+							gfx_projet_dir .. "/libs/imgui-master/*.h",	
+							gfx_projet_dir .. "/libs/imgui-master/examples/imgui_impl_sdl.h",
+							gfx_projet_dir .. "/libs/imgui-master/examples/imgui_impl_sdl.cpp",
+							gfx_projet_dir .. "/libs/imgui-master/examples/imgui_impl_opengl3.h",
+							gfx_projet_dir .. "/libs/imgui-master/examples/imgui_impl_opengl3.cpp"
 	}
 	
 project("Projet-synthese")

@@ -16,7 +16,10 @@ obj/x64/debug/tuto7.o: src/Projet-synthese/tuto7.cpp src/gKit/wavefront.h \
  libs/soloud20200207/include/soloud_wav.h src/gKit/glcore.h \
  src/Projet-synthese/shader.h src/gKit/program.h src/gKit/uniforms.h \
  src/gKit/mesh.h src/gKit/text.h src/gKit/widgets.h src/gKit/text.h \
- src/Projet-synthese/Objet.h src/Projet-synthese/Cube.h
+ src/Projet-synthese/Objet.h src/Projet-synthese/Cube.h \
+ libs/imgui-master/imgui.h libs/imgui-master/imconfig.h \
+ libs/imgui-master/examples/imgui_impl_sdl.h \
+ libs/imgui-master/examples/imgui_impl_opengl3.h
 
 src/gKit/wavefront.h:
 
@@ -97,3 +100,11 @@ src/gKit/text.h:
 src/Projet-synthese/Objet.h:
 
 src/Projet-synthese/Cube.h:
+
+libs/imgui-master/imgui.h:
+
+libs/imgui-master/imconfig.h:
+
+libs/imgui-master/examples/imgui_impl_sdl.h:
+
+libs/imgui-master/examples/imgui_impl_opengl3.h:
