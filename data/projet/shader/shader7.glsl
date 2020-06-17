@@ -80,7 +80,7 @@ void main( )
             i=0.08;
         }
     }
-    if(foudre<=500)
+    if(foudre<=2000)
     {
 	    i=1;
     }
@@ -121,7 +121,14 @@ void main( )
     	}
 	else
 	{
-		lighting = (ambient + (diffuse + specular)) * colore*i;
+		if(foudre<=2000)
+	        {
+		     	lighting = (ambient + (diffuse + specular)) * colore*i*vec3(0.5,0.5,1);
+	        }
+		else
+		{
+			lighting = (ambient + (diffuse + specular)) * colore*i;
+		}
 	}
         
         vec3 MaterialAmbientColor = vec3(0.1,0.1,0.1) * lighting; 
