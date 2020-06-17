@@ -36,7 +36,7 @@ public:
         ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_context);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-        m_objet.mesh = read_mesh("data/cube.obj");
+        m_objet.mesh = read_mesh("data/projet/mesh/main.obj");
         m_terrain.mesh = read_mesh("data/projet/mesh/sale2.obj");
         m_terrain2.mesh = read_mesh("data/projet/mesh/terrain2.obj");
         lit.mesh = read_mesh("data/projet/mesh/litdéformé.obj");
@@ -48,9 +48,11 @@ public:
         vaseC.mesh = read_mesh("data/projet/mesh/vasecassé.obj");
         CouteauSang.mesh = read_mesh("data/projet/mesh/couteausang.obj");
         Shelf.mesh = read_mesh("data/projet/mesh/shelf_pleine.obj");
-        plane = read_mesh("data/projet/mesh/plane.obj");
+        Piano.mesh = read_mesh("data/projet/mesh/piano.obj");
+        Cape.mesh = read_mesh("data/projet/mesh/cape.obj");
+        plane = read_mesh("data/bigguy.obj");
 
-        m_texture = read_texture(0, "data/debug2x2red.png");
+        m_texture = read_texture(0, "data/projet/img/main.png");
         m_text_terrain = read_texture(0, "data/projet/img/sale2text.png");
         text_lit = read_texture(0, "data/projet/img/lit.png");
         m_text_terrain2 = read_texture(0, "data/projet/img/textureTerrain.png");
@@ -60,13 +62,9 @@ public:
         tVase = read_texture(0, "data/projet/img/testVase1.png");
         tCouteau = read_texture(0, "data/projet/img/couteau.png");
         textFull = read_texture(0, "data/projet/img/shelf_pleine.png");
-        for (int i = 0; i < 7; i++)
-        {
-            std::string s = "data/projet/img/test";
-            s = s + std::to_string(i);
-            s = s + ".png";
-            texPlane[i] = read_texture(0, s.c_str());
-        }
+        texPiano = read_texture(0, "data/projet/img/textpiano.png");
+        texCape = read_texture(0, "data/projet/img/robe.png");
+        texPlane = read_texture(0, "data/projet/img/black.png");
 
         m_objet.setNumberCube(1);
         Point pmin, pmax;
@@ -109,6 +107,8 @@ public:
         vaseC.mesh.release();
         CouteauSang.mesh.release();
         Shelf.mesh.release();
+        Piano.mesh.release();
+        Cape.mesh.release();
         glDeleteTextures(1, &m_texture);
         glDeleteTextures(1, &m_text_terrain2);
         glDeleteTextures(1, &m_text_terrain);
@@ -119,6 +119,8 @@ public:
         glDeleteTextures(1, &text_lit);
         glDeleteTextures(1, &tCouteau);
         glDeleteTextures(1, &textFull);
+        glDeleteTextures(1, &texPiano);
+        glDeleteTextures(1, &texCape);
         shad.quit();
         aud.audio_Quit();
 
@@ -236,16 +238,18 @@ public:
         if (controlefin == 0)
         {
             Point luxPosition;
-            if (shad.foudreControle > 500)
+            if (shad.foudreControle > 2000)
             {
-                luxPosition = (Point)CC.Position;
+                luxPosition = (Point)((Point)CC.Position+Point(0,0.2,0)-0.3*(Point)CC.direction());
             }
             else
             {
                 luxPosition = Point(10, 0, 10);
             }
             Point Direction = (Point)CC.direction();
-            shad.edraw(m_objet.mesh, CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_view, m_texture, luxPosition, Direction);
+            
+            shad.edraw(m_objet.mesh, CC.getCh2w()*Translation(-0.1,0.3,0)*RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
+            shad.edraw(Cape.mesh, CC.getCh2w()*Translation(0,0.3,0)*RotationX(90)* Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
             box_transform(CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_objet);
             shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
             box_transform(Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), lit);
@@ -262,9 +266,11 @@ public:
             shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
             shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
             shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
-            if (shad.foudreControle <= 500)
+            shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5) , m_view, texPiano, luxPosition, Direction);
+            
+            if (shad.foudreControle <= 2000)
             {
-                shad.edraw(plane, Translation(CC.Position) * Translation(0, 1, 1) * RotationX(45)*Scale(1.5,1.5,1.5), m_view, texPlane[5 - countFoudre], luxPosition, Direction);
+                shad.edraw(plane, Translation(CC.Position) * Translation(1.2*CC.direction())*Scale(0.05,0.05,0.05), m_view, texPlane, luxPosition, Direction);
             }
         }
         if (controleindice == 1 && controlefin == 0)
@@ -357,12 +363,12 @@ public:
         }
         if (controlefin == 0)
         {
-            shad.time = time;
+            shad.time = time*0.001;
             int n = 0;
             n = CalculateContact(m_terrain);
             n = CalculateContact(lit);
 
-            if (n == 0)
+            if (n == 0 && shad.foudreControle>2000)
             {
                 CC.update(delta);
             }
@@ -466,6 +472,8 @@ protected:
     Objet vaseC;
     Objet CouteauSang;
     Objet Shelf;
+    Objet Piano;
+    Objet Cape;
     Mesh plane;
     GLuint m_texture;
     GLuint m_text_terrain;
@@ -477,7 +485,9 @@ protected:
     GLuint tVase;
     GLuint tCouteau;
     GLuint textFull;
-    GLuint texPlane[7];
+    GLuint texPlane;
+    GLuint texPiano;
+    GLuint texCape;
     CharacterController CC;
     Orbiter m_view;
     shader shad;
