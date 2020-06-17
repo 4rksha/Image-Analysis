@@ -362,7 +362,7 @@ public:
         }
         if (controlefin == 0)
         {
-            shad.time = time;
+            shad.time = time*0.001;
             int n = 0;
             n = CalculateContact(m_terrain);
             n = CalculateContact(lit);
