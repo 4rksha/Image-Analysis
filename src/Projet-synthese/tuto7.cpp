@@ -36,7 +36,7 @@ public:
         ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_context);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-        m_objet.mesh = read_mesh("data/cube.obj");
+        m_objet.mesh = read_mesh("data/projet/mesh/main.obj");
         m_terrain.mesh = read_mesh("data/projet/mesh/sale2.obj");
         m_terrain2.mesh = read_mesh("data/projet/mesh/terrain2.obj");
         lit.mesh = read_mesh("data/projet/mesh/litdéformé.obj");
@@ -51,7 +51,7 @@ public:
         Piano.mesh = read_mesh("data/projet/mesh/piano.obj");
         plane = read_mesh("data/projet/mesh/plane.obj");
 
-        m_texture = read_texture(0, "data/debug2x2red.png");
+        m_texture = read_texture(0, "data/projet/img/main.png");
         m_text_terrain = read_texture(0, "data/projet/img/sale2text.png");
         text_lit = read_texture(0, "data/projet/img/lit.png");
         m_text_terrain2 = read_texture(0, "data/projet/img/textureTerrain.png");
@@ -242,14 +242,14 @@ public:
             Point luxPosition;
             if (shad.foudreControle > 500)
             {
-                luxPosition = (Point)CC.Position;
+                luxPosition = (Point)((Point)CC.Position+Point(0,0.1,0)-0.3*(Point)CC.direction());
             }
             else
             {
                 luxPosition = Point(10, 0, 10);
             }
             Point Direction = (Point)CC.direction();
-            shad.edraw(m_objet.mesh, CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_view, m_texture, luxPosition, Direction);
+            shad.edraw(m_objet.mesh, CC.getCh2w()*Translation(0,0.3,0)*RotationY(-90) * Scale(0.1, 0.1, 0.1), m_view, m_texture, luxPosition, Direction);
             box_transform(CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_objet);
             shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
             box_transform(Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), lit);

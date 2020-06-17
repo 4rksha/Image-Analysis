@@ -40,8 +40,8 @@ const float alpha=3;
 const float PI= 3.14159265359;
 const float h=3;
 const float r=0.5;
-float a=1;
-float f=100;
+float a=0.2;
+float f=800;
 
 uniform sampler2D diffuse_color;
 uniform vec3 source;
@@ -54,7 +54,7 @@ out vec4 fragment_color;
 
 void main( )
 {
-    float flameVar= 0.1*a*cos(2*PI*f*time);
+    float flameVar= a*cos(2*PI*f*time);
     vec3 camera= vec3(viewInvMatrix * vec4(0, 0, 0, 1));        // position de la camera dans le repere du monde
 
     //vec3  colore = vec3(0,0,1);
@@ -84,6 +84,16 @@ void main( )
     {
 	    i=1;
     }
+    float circledist = length(p - source);
+    if(circledist<0.4)
+    {
+        i=(0.4-circledist)/0.2;
+	if(circledist<=0.01)
+	{
+		i=4;
+	}
+    }
+    
     
 
         vec4 color= texture(diffuse_color, vertex_texcoord);
