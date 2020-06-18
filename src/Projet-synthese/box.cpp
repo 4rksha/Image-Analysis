@@ -80,7 +80,7 @@ Box::Box(const Point &i_pmin, const Point &i_pmax)
   meshcollider.vertex(p1);
 }
 
-bool Box::collides3d(const Box &rhs)
+bool Box::collides3d(const Box &rhs,Vector & x)
 {
   Vector d[6] = {
       Vector(-1, 0, 0),
@@ -91,8 +91,6 @@ bool Box::collides3d(const Box &rhs)
       Vector(0, 0, 1)};
   Point p[6];
 
-  bool intersect = true;
-
   for (int i = 0; i < 6; ++i)
   {
     Vector v = rhs.T.inverse()(T(d[i]));
@@ -102,8 +100,10 @@ bool Box::collides3d(const Box &rhs)
     p[i] = T.inverse()(rhs.T(p[i]));
     if ((i < 3 && p[i](i) <= pmin(i)) || (i >= 3 && p[i](i - 3) >= pmax(i - 3)))
     {
+      x=-T(d[i]);
       return false;
     }
+    
   }
 
   for (int i = 0; i < 6; ++i)
@@ -115,8 +115,10 @@ bool Box::collides3d(const Box &rhs)
     p[i] = rhs.T.inverse()(T(p[i]));
     if ((i < 3 && p[i](i) <= rhs.pmin(i)) || (i >= 3 && p[i](i - 3) >= rhs.pmax(i - 3)))
     {
+      x=rhs.T(d[i]);
       return false;
     }
+    
   }
   return true;
 }

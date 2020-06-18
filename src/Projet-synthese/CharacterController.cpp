@@ -26,7 +26,7 @@ void CharacterController::update(const float dt)
         }
         else
         {
-            setVelocityNorm(0.11);
+            setVelocityNorm(0.1);
         }
         m_ch2w = Translation(-direction() * m_v * 0.1) * m_ch2w;
         Vector p = position();

@@ -459,14 +459,14 @@ public:
     }
 
     // vérifie si l'on touche un objet ou non
-    bool verifCollide()
+    bool verifCollide(Vector & x)
     {
         bool n=false;
         for(unsigned int j=1;j<Objets.size();j++)
         {
             for(unsigned int k=0;k<Objets[j]->boxes.size();k++)
             {
-                n=Objets[0]->boxes[0].collides3d(Objets[j]->boxes[k]);
+                n=Objets[0]->boxes[0].collides3d(Objets[j]->boxes[k],x);
                 if(n==true)
                 {
                     return true;
@@ -503,15 +503,14 @@ public:
 
             //controle les déplacements en fonction des boxs de collisions
             shad.time = time * 0.001;
-            bool n=false;
             Transform T1= CC.getCh2w();
+            Vector x;
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                n=verifCollide();
-                if(n==true)
+                if(verifCollide(x))
                 {
-                    CC.setCh2w(T1);
+                    CC.setCh2w(T1*Translation(-0.01*x));
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
