@@ -458,22 +458,18 @@ public:
     }
 
     // vérifie si l'on touche un objet ou non
-    bool verifCollide(Vector &x)
+    bool verifCollide(Vector &x, int & s)
     {
         bool n = false;
         for (unsigned int i = 1; i < Objets.size(); i++)
         {
             for (unsigned int j = 0; j < Objets[i]->boxes.size(); j++)
             {
-                n = m_caracter.boxes[0].collides3d(Objets[i]->boxes[j], x);
+                n = Objets[0]->boxes[0].collides3d(Objets[i]->boxes[j], x);
                 if (n == true)
                 {
-                    std::cout << "collide with " << i << std::endl;
+                    s=i;
                     return true;
-                }
-                else
-                {
-                    std::cout << "no colliding" << std::endl;
                 }
             }
         }
@@ -508,16 +504,32 @@ public:
             shad.time = time * 0.001;
             Transform T1 = CC.getCh2w();
             Vector x;
+            int s;
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                if (verifCollide(x))
+                if (verifCollide(x,s))
                 {
-                    std::cout << x << std::endl;
-                    CC.setCh2w(T1 * Translation(-0.01 * x));
+                    CC.setCh2w(T1 * Translation(0.01 * CC.direction()));
+                    Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
+                    box_transform(T, m_caracter);
+                    bool n2=false;
+                    for(unsigned int i=0;i<Objets[s]->boxes.size();i++)
+                    {
+                        n2 = Objets[0]->boxes[0].collides3d(Objets[s]->boxes[i], x);
+                        if (n2 == true)
+                        {
+                            break;
+                        }
+                    }
+                    if (n2==true)
+                    {
+                        CC.setCh2w(T1 * Translation(0.01 * CC.direction()));
+                    }
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
+                
             }
             m_view = CC.getCam();
 
