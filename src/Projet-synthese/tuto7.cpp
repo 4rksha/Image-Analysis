@@ -508,7 +508,16 @@ public:
                 n=verifCollide();
                 if(n==true)
                 {
-                    CC.setCh2w(T1);
+                    if(key_state('z'))
+                    {
+                        clear_key_state('z');
+                        CC.setCh2w(T1*Translation(0.1*CC.direction()));
+                    }
+                    if(key_state('s'))
+                    {
+                        clear_key_state('s');
+                        CC.setCh2w(T1*Translation(0.1*CC.direction()));
+                    }
                 }
                 Transform T = Translation(CC.Position) * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
