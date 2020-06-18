@@ -504,22 +504,36 @@ public:
             //controle les déplacements en fonction des boxs de collisions
             shad.time = time * 0.001;
             bool n=false;
-            Transform T1=CC.getCh2w();
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
                 n=verifCollide();
                 if(n==true)
                 {
-                    if(key_state('z'))
+                    if(CC.direction().x<=0)
                     {
-                        clear_key_state('z');
-                        CC.setCh2w(T1*Translation(0.1*CC.direction()));
+                        if(key_state('z'))
+                        {
+                            clear_key_state('z');
+                            CC.setCh2w(CC.getCh2w()*Translation(0.1*CC.direction()));
+                        }
+                        if(key_state('s'))
+                        {
+                            clear_key_state('s');
+                            CC.setCh2w(CC.getCh2w()*Translation(0.1*CC.direction()));
+                        }
                     }
-                    if(key_state('s'))
-                    {
-                        clear_key_state('s');
-                        CC.setCh2w(T1*Translation(0.1*CC.direction()));
+                    else{
+                        if(key_state('z'))
+                        {
+                            clear_key_state('z');
+                            CC.setCh2w(CC.getCh2w()*Translation(-0.1*CC.direction()));
+                        }
+                        if(key_state('s'))
+                        {
+                            clear_key_state('s');
+                            CC.setCh2w(CC.getCh2w()*Translation(-0.1*CC.direction()));
+                        }
                     }
                 }
                 Transform T = Translation(CC.Position) * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
