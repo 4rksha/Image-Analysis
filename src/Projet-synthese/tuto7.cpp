@@ -283,7 +283,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         if (controlefin == 0)
         {
-            if (debug)
+            if (debug == 0 || debug == 2)
             {
                 for (unsigned int i = 0; i < Objets.size(); ++i)
                 {
@@ -299,7 +299,7 @@ public:
                     }
                 }
             }
-            else
+            if (debug == 1 || debug == 2)
             {
                 Point luxPosition;
                 if (shad.foudreControle > 2000)
@@ -415,7 +415,7 @@ public:
             delay -= delta;
             if (key_state('g') && delay <= 0)
             {
-                debug = !debug;
+                debug = (debug + 1) % 3;
                 delay = 200.f;
                 std::cout << "DEBUG Toggled !" << std::endl;
             }
@@ -554,7 +554,7 @@ protected:
     int dialogue = 0;
     int countFoudre = 0;
     int delay = 0;
-    bool debug = 0;
+    int debug = 0;
 };
 
 int main(int argc, char **argv)

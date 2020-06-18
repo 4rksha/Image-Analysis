@@ -58,8 +58,8 @@ bool Box::collides3d(const Box &rhs)
 Mesh Box::GetMesh()
 {
   Mesh m = Mesh(GL_LINES);
-  Point p1(T(pmin));
-  Point p2(T(pmax));
+  Point p1(pmin);
+  Point p2(pmax);
   Point p3(p1.x, p1.y, p2.z);
   Point p4(p1.x, p2.y, p1.z);
   Point p5(p2.x, p1.y, p1.z);
