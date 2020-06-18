@@ -14,7 +14,7 @@ out vec3 n;
 out vec4 frag;
 out vec2 vertex_texcoord;
 
-void main( )
+void main()
 {
     gl_Position= mvpMatrix * vec4(position, 1);
     

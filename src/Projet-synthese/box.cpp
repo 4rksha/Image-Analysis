@@ -42,7 +42,7 @@ bool Box::collides3d(const Box &rhs)
 
   for (int i = 0; i < 6; ++i)
   {
-    Vector v  = T.inverse()(rhs.T(d[i]));
+    Vector v = T.inverse()(rhs.T(d[i]));
     p[i].x = v.x > 0 ? pmin.x : pmax.x;
     p[i].y = v.y > 0 ? pmin.y : pmax.y;
     p[i].z = v.z > 0 ? pmin.z : pmax.z;
@@ -53,4 +53,42 @@ bool Box::collides3d(const Box &rhs)
     }
   }
   return true;
+}
+
+Mesh Box::GetMesh()
+{
+  Mesh m = Mesh(GL_LINES);
+  Point p1(T(pmin));
+  Point p2(T(pmax));
+  Point p3(p1.x, p1.y, p2.z);
+  Point p4(p1.x, p2.y, p1.z);
+  Point p5(p2.x, p1.y, p1.z);
+  Point p6(p1.x, p2.y, p2.z);
+  Point p7(p2.x, p1.y, p2.z);
+  Point p8(p2.x, p2.y, p1.z);
+  m.vertex(p6);
+  m.vertex(p2);
+  m.vertex(p2);
+  m.vertex(p8);
+  m.vertex(p8);
+  m.vertex(p4);
+  m.vertex(p4);
+  m.vertex(p6);
+  m.vertex(p3);
+  m.vertex(p7);
+  m.vertex(p7);
+  m.vertex(p5);
+  m.vertex(p5);
+  m.vertex(p1);
+  m.vertex(p1);
+  m.vertex(p3);
+  m.vertex(p6);
+  m.vertex(p3);
+  m.vertex(p2);
+  m.vertex(p7);
+  m.vertex(p8);
+  m.vertex(p5);
+  m.vertex(p4);
+  m.vertex(p1);
+  return m;
 }

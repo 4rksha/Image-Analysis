@@ -1,8 +1,10 @@
 #include "Objet.h"
 
-void Objet::AddBox(Point pmin, Point pmax)
+void Objet::AddBox(Point pmin, Point pmax, Transform T)
 {   
-    boxes.push_back(Box(pmin, pmax));
+    Box b = Box(pmin, pmax);
+    b.T = T;
+    boxes.push_back(b);
 }
 Objet::Objet()
 {

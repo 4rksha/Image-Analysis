@@ -17,6 +17,8 @@
 #include "libs/imgui-master/examples/imgui_impl_opengl3.h"
 #include <GL/glew.h>
 #include <string>
+#include <fstream>
+#include <sstream>
 
 class TP : public App
 {
@@ -36,19 +38,33 @@ public:
         ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_context);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-        m_objet.mesh = read_mesh("data/projet/mesh/main.obj");
+        Objets.push_back(&m_caracter);
+        m_caracter.mesh = read_mesh("data/projet/mesh/main.obj");
+        Objets.push_back(&m_terrain);
         m_terrain.mesh = read_mesh("data/projet/mesh/sale2.obj");
+        Objets.push_back(&m_terrain2);
         m_terrain2.mesh = read_mesh("data/projet/mesh/terrain2.obj");
+        Objets.push_back(&lit);
         lit.mesh = read_mesh("data/projet/mesh/litdéformé.obj");
+        Objets.push_back(&cheval);
         cheval.mesh = read_mesh("data/projet/mesh/chevalabasculedéformé.obj");
+        Objets.push_back(&coussin1);
         coussin1.mesh = read_mesh("data/projet/mesh/coussindéformé.obj");
+        Objets.push_back(&coussin2);
         coussin2.mesh = read_mesh("data/projet/mesh/coussin.obj");
+        Objets.push_back(&canape);
         canape.mesh = read_mesh("data/projet/mesh/canapédéformé.obj");
+        Objets.push_back(&vase);
         vase.mesh = read_mesh("data/projet/mesh/vase.obj");
+        Objets.push_back(&vaseC);
         vaseC.mesh = read_mesh("data/projet/mesh/vasecassé.obj");
+        Objets.push_back(&CouteauSang);
         CouteauSang.mesh = read_mesh("data/projet/mesh/couteausang.obj");
+        Objets.push_back(&Shelf);
         Shelf.mesh = read_mesh("data/projet/mesh/shelf_pleine.obj");
+        Objets.push_back(&Piano);
         Piano.mesh = read_mesh("data/projet/mesh/piano.obj");
+        Objets.push_back(&Cape);
         Cape.mesh = read_mesh("data/projet/mesh/cape.obj");
         plane = read_mesh("data/bigguy.obj");
 
@@ -67,10 +83,12 @@ public:
         texPlane = read_texture(0, "data/projet/img/black.png");
 
         Point pmin, pmax;
-        m_objet.mesh.bounds(pmin, pmax);
-        m_objet.AddBox(pmax, pmin);
+        Cape.mesh.bounds(pmin, pmax);
+        m_caracter.AddBox(pmin, pmax, Identity());
         lit.mesh.bounds(pmin, pmax);
-        m_objet.AddBox(pmax, pmin);
+        lit.AddBox(pmin, pmax, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3));
+
+        getBoxes("data/projet/boites/sale2.txt", m_terrain);
 
         shad.init();
         aud.audio_Init();
@@ -93,7 +111,7 @@ public:
     // destruction des objets de l'application
     int quit()
     {
-        m_objet.mesh.release();
+        m_caracter.mesh.release();
         lit.mesh.release();
         m_terrain.mesh.release();
         m_terrain2.mesh.release();
@@ -125,12 +143,34 @@ public:
         return 0;
     }
 
-    void box_transform(Transform T, Objet m)
+    void getBoxes(const char *filepath, Objet obj)
     {
-        for (unsigned int i = 0; i < m.boxes.size(); i++)
+        std::string s;
+        std::ifstream file(filepath);
+        if (file.is_open())
         {
-            Box &b = m.boxes[i];
-            b = Box(T(b.pmax), T(b.pmin));
+
+            getline(file, s);
+            int nbPoint = atoi(s.c_str());
+            std::cout << nbPoint << std::endl;
+            Point p[nbPoint];
+            for (int i = 0; i < nbPoint; ++i)
+            {
+                getline(file, s);
+                std::istringstream ss(s);
+                float x, y, z;
+                ss >> x;
+                ss >> y;
+                ss >> z;
+                p[i] = Point(x, y, z);
+            }
+            file.close();
+            for (int i = 0; i < nbPoint; i += 2)
+                obj.AddBox(p[i], p[i + 1], Identity());
+        }
+        else
+        {
+            std::cout << "Unable to open file";
         }
     }
 
@@ -230,46 +270,67 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
+    void box_transform(Transform &T, Objet m)
+    {
+        for (unsigned int i = 0; i < m.boxes.size(); i++)
+        {
+            m.boxes[i].T = T;
+        }
+    }
     // dessiner une nouvelle image
     int render()
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         if (controlefin == 0)
         {
-            Point luxPosition;
-            if (shad.foudreControle > 2000)
+            if (debug)
             {
-                luxPosition = (Point)((Point)CC.Position + Point(0, 0.2, 0) - 0.3 * (Point)CC.direction());
+                for (unsigned int i = 0; i < Objets.size(); ++i)
+                {
+                    for (unsigned int j = 0; j < Objets[i]->boxes.size(); ++i)
+                    {
+                        Mesh m = Objets[i]->boxes[j].GetMesh();
+                        m.color(0.f, 1.f, 0.f);
+                        draw(m,
+                             Objets[i]->boxes[j].T,
+                             m_view.view(),
+                             m_view.projection(window_width(),
+                                               window_height(), 45));
+                    }
+                }
             }
             else
             {
-                luxPosition = Point(10, 0, 10);
-            }
-            Point Direction = (Point)CC.direction();
+                Point luxPosition;
+                if (shad.foudreControle > 2000)
+                {
+                    luxPosition = (Point)((Point)CC.Position + Point(0, 0.2, 0) - 0.3 * (Point)CC.direction());
+                }
+                else
+                {
+                    luxPosition = Point(10, 0, 10);
+                }
+                Point Direction = (Point)CC.direction();
 
-            shad.edraw(m_objet.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
-            shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
-            box_transform(CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_objet);
-            shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
-            box_transform(Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), lit);
-            shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction);
-            box_transform(Identity(), m_terrain);
-            shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction);
-            box_transform(Translation(0, -2, 0) * Scale(20, 10, 20), m_terrain2);
-            shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction);
-            shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
-            shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
-            shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction);
-            shad.edraw(vase.mesh, Translation(5, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
-            shad.edraw(vaseC.mesh, Translation(5.5, 0.1, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
-            shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
-            shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
-            shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
-            shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction);
-
-            if (shad.foudreControle <= 2000)
-            {
-                shad.edraw(plane, Translation(CC.Position) * Translation(1.2 * CC.direction()) * Scale(0.05, 0.05, 0.05), m_view, texPlane, luxPosition, Direction);
+                shad.edraw(m_caracter.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
+                shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
+                shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
+                shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction);
+                shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction);
+                shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction);
+                shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
+                shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
+                shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction);
+                shad.edraw(vase.mesh, Translation(5, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
+                shad.edraw(vaseC.mesh, Translation(5.5, 0.1, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
+                shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
+                shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
+                shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
+                shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction);
+                if (shad.foudreControle <= 2000)
+                {
+                    shad.edraw(plane, Translation(CC.Position) * Translation(1.2 * CC.direction()) * Scale(0.05, 0.05, 0.05), m_view, texPlane, luxPosition, Direction);
+                }
             }
         }
         if (controleindice == 1 && controlefin == 0)
@@ -351,12 +412,20 @@ public:
         }
         if (controlefin == 0)
         {
+            delay -= delta;
+            if (key_state('g') && delay <= 0)
+            {
+                debug = !debug;
+                delay = 200.f;
+                std::cout << "DEBUG Toggled !" << std::endl;
+            }
             shad.time = time * 0.001;
 
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                std::cout << CC.Position << std::endl;
+                Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
+                box_transform(T, m_caracter);
             }
             m_view = CC.getCam();
 
@@ -446,7 +515,7 @@ public:
     }
 
 protected:
-    Objet m_objet;
+    Objet m_caracter;
     Objet m_terrain;
     Objet m_terrain2;
     Objet lit;
@@ -478,12 +547,14 @@ protected:
     Orbiter m_view;
     shader shad;
     audio aud;
+    std::vector<Objet *> Objets;
     int controleindice = 0;
     int controlefin = 3;
     int controlePoss[6] = {0};
     int dialogue = 0;
     int countFoudre = 0;
     int delay = 0;
+    bool debug = 0;
 };
 
 int main(int argc, char **argv)

@@ -11,7 +11,7 @@ class Objet
 public:
     Objet();
     ~Objet();
-    void AddBox(Point pmin, Point pmax);
+    void AddBox(Point pmin, Point pmax, Transform T);
 
     Mesh mesh; 
     std::vector<Box> boxes;
