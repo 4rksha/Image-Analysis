@@ -38,7 +38,6 @@ public:
         ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_context);
         ImGui_ImplOpenGL3_Init("#version 330");
 
-
         //initialise les meshs
         Objets.push_back(&m_caracter);
         m_caracter.mesh = read_mesh("data/projet/mesh/main.obj");
@@ -86,7 +85,6 @@ public:
         texCape = read_texture(0, "data/projet/img/robe.png");
         texPlane = read_texture(0, "data/projet/img/chien.png");
         texGuitare = read_texture(0, "data/projet/img/guitare.png");
-
 
         //initialises les boudings box
         Point pmin, pmax;
@@ -162,8 +160,8 @@ public:
         glDeleteTextures(1, &textFull);
         glDeleteTextures(1, &texPiano);
         glDeleteTextures(1, &texCape);
-        glDeleteTextures(1,&texPlane);
-        glDeleteTextures(1,&texGuitare);
+        glDeleteTextures(1, &texPlane);
+        glDeleteTextures(1, &texGuitare);
         shad.quit();
         aud.audio_Quit();
 
@@ -171,7 +169,7 @@ public:
     }
 
     // lis et crée les boxes de collisions autour des murs à partir d'un fichier
-    void getBoxes(const char *filepath, Objet & obj)
+    void getBoxes(const char *filepath, Objet &obj)
     {
         std::string s;
         std::ifstream file(filepath);
@@ -252,7 +250,7 @@ public:
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(480, 250));
-        ImGui::Begin("Menu"); 
+        ImGui::Begin("Menu");
         if (ImGui::Button("Play"))
         {
             controlefin = 5;
@@ -327,7 +325,7 @@ public:
                 {
                     for (unsigned int j = 0; j < Objets[i]->boxes.size(); ++i)
                     {
-                        Mesh & m = Objets[i]->boxes[j].meshcollider;
+                        Mesh &m = Objets[i]->boxes[j].meshcollider;
                         m.color(0.f, 1.f, 0.f);
                         draw(m,
                              Objets[i]->boxes[j].T,
@@ -351,34 +349,34 @@ public:
                 }
                 Point Direction = (Point)CC.direction();
 
-                shad.edraw(m_caracter.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(vase.mesh, Translation(4, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(vaseC.mesh, Translation(4.5, 0.15, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction,shad.getProgram(0));
-                shad.edraw(Guitare.mesh, Translation(0, 0.4, -6.5)*RotationY(180)*RotationX(90) * Scale(0.1, 0.1, 0.1), m_view, texGuitare, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(m_caracter.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(vase.mesh, Translation(4, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(vaseC.mesh, Translation(4.5, 0.15, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction, shad.getProgram(0));
+                shad.edraw(Guitare.mesh, Translation(0, 0.4, -6.5) * RotationY(180) * RotationX(90) * Scale(0.1, 0.1, 0.1), m_view, texGuitare, luxPosition, Direction, shad.getProgram(0));
                 if (shad.foudreControle <= 2000)
                 {
-                    shad.edraw(plane, Translation(CC.Position) * Translation(1,0.3,0) * RotationY(-90)*Scale(0.3, 0.3, 0.3), m_view, texPlane, luxPosition, Direction,shad.getProgram(1));
-                    if(actionEc==1)
+                    shad.edraw(plane, Translation(CC.Position) * Translation(1, 0.3, 0) * RotationY(-90) * Scale(0.3, 0.3, 0.3), m_view, texPlane, luxPosition, Direction, shad.getProgram(1));
+                    if (actionEc == 1)
                     {
                         affichetext("I see you.", "voice", 1, true);
                     }
-                    if(actionEc==2)
+                    if (actionEc == 2)
                     {
                         affichetext("tic tac tic tac.", "voice", 1, true);
                     }
-                    if(actionEc==3)
+                    if (actionEc == 3)
                     {
                         affichetext("oups.", "voice", 1, true);
                     }
@@ -413,6 +411,7 @@ public:
         //affiche les dialogues
         if (controlefin == 5)
         {
+            controlefin = 0;
             if (dialogue < 2000)
                 affichetext("Hum...? Where am I?", "child", 1, true);
             if (dialogue < 4000 && dialogue > 2000)
@@ -459,22 +458,26 @@ public:
     }
 
     // vérifie si l'on touche un objet ou non
-    bool verifCollide(Vector & x)
+    bool verifCollide(Vector &x)
     {
-        bool n=false;
-        for(unsigned int j=1;j<Objets.size();j++)
+        bool n = false;
+        for (unsigned int i = 1; i < Objets.size(); i++)
         {
-            for(unsigned int k=0;k<Objets[j]->boxes.size();k++)
+            for (unsigned int j = 0; j < Objets[i]->boxes.size(); j++)
             {
-                n=Objets[0]->boxes[0].collides3d(Objets[j]->boxes[k],x);
-                if(n==true)
+                n = m_caracter.boxes[0].collides3d(Objets[i]->boxes[j], x);
+                if (n == true)
                 {
+                    std::cout << "collide with " << i << std::endl;
                     return true;
+                }
+                else
+                {
+                    std::cout << "no colliding" << std::endl;
                 }
             }
         }
         return false;
-        
     }
     int update(const float time, const float delta)
     {
@@ -503,14 +506,15 @@ public:
 
             //controle les déplacements en fonction des boxs de collisions
             shad.time = time * 0.001;
-            Transform T1= CC.getCh2w();
+            Transform T1 = CC.getCh2w();
             Vector x;
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                if(verifCollide(x))
+                if (verifCollide(x))
                 {
-                    CC.setCh2w(T1*Translation(-0.01*x));
+                    std::cout << x << std::endl;
+                    CC.setCh2w(T1 * Translation(-0.01 * x));
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
@@ -526,15 +530,15 @@ public:
             verifPos(Vector(-3, 0, -7), controlePos, 3);
             verifPos(Vector(4.5, 0, -5), controlePos, 4);
             verifPos(Vector(0, 0, 5), controlePos, 5);
-            if(length(CC.Position - Vector(4.5, 0, 3.5)) >= 1 &&
+            if (length(CC.Position - Vector(4.5, 0, 3.5)) >= 1 &&
                 length(CC.Position - Vector(0, 0, -5)) >= 1 &&
                 length(CC.Position - Vector(-5, 0, -1)) >= 1 &&
                 length(CC.Position - Vector(-3, 0, -7)) >= 1 &&
-                length(CC.Position - Vector(4.5, 0, -5))>=1 &&
-                length(CC.Position - Vector(0, 0, 5))>=1)
-                
+                length(CC.Position - Vector(4.5, 0, -5)) >= 1 &&
+                length(CC.Position - Vector(0, 0, 5)) >= 1)
+
             {
-                    controleindice=0;
+                controleindice = 0;
             }
 
             if (controleindice == 1 && controlePoss[controlePos] == 1)
@@ -622,18 +626,16 @@ public:
             timed += delta;
 
             //lance le son d'un violon après le premier éclair
-            static int violon =0;
-            if(violon==0 && actionEc==1)
+            static int violon = 0;
+            if (violon == 0 && actionEc == 1)
             {
                 aud.play_audio(aud.getViolon());
-                violon=1;
+                violon = 1;
             }
             timed += delta;
         }
         return 1;
     }
-
-
 
 protected:
     //déclaration des objets à afficher
@@ -689,7 +691,7 @@ protected:
     int countFoudre = 0;
     int delay = 0;
     int debug = 0;
-    int actionEc=0;
+    int actionEc = 0;
 };
 
 int main(int argc, char **argv)

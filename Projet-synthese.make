@@ -108,63 +108,63 @@ ifeq ($(config),release32)
 endif
 
 OBJECTS := \
-	$(OBJDIR)/vec.o \
-	$(OBJDIR)/wavefront.o \
-	$(OBJDIR)/image_io.o \
-	$(OBJDIR)/mesh.o \
-	$(OBJDIR)/gamepads.o \
 	$(OBJDIR)/app_time.o \
-	$(OBJDIR)/mat.o \
-	$(OBJDIR)/envmap.o \
-	$(OBJDIR)/program.o \
-	$(OBJDIR)/image.o \
-	$(OBJDIR)/window.o \
-	$(OBJDIR)/texture.o \
-	$(OBJDIR)/rgbe.o \
-	$(OBJDIR)/app_camera.o \
-	$(OBJDIR)/image_hdr.o \
-	$(OBJDIR)/widgets.o \
-	$(OBJDIR)/draw.o \
-	$(OBJDIR)/text.o \
 	$(OBJDIR)/app.o \
-	$(OBJDIR)/orbiter.o \
-	$(OBJDIR)/color.o \
+	$(OBJDIR)/program.o \
+	$(OBJDIR)/texture.o \
+	$(OBJDIR)/image_hdr.o \
+	$(OBJDIR)/window.o \
+	$(OBJDIR)/mat.o \
+	$(OBJDIR)/gamepads.o \
 	$(OBJDIR)/uniforms.o \
-	$(OBJDIR)/CharacterController.o \
-	$(OBJDIR)/tuto7.o \
-	$(OBJDIR)/camera.o \
-	$(OBJDIR)/audio.o \
-	$(OBJDIR)/Objet.o \
-	$(OBJDIR)/shader.o \
+	$(OBJDIR)/wavefront.o \
+	$(OBJDIR)/envmap.o \
+	$(OBJDIR)/mesh.o \
+	$(OBJDIR)/text.o \
+	$(OBJDIR)/rgbe.o \
+	$(OBJDIR)/image.o \
+	$(OBJDIR)/color.o \
+	$(OBJDIR)/app_camera.o \
+	$(OBJDIR)/orbiter.o \
+	$(OBJDIR)/image_io.o \
+	$(OBJDIR)/vec.o \
+	$(OBJDIR)/draw.o \
+	$(OBJDIR)/widgets.o \
 	$(OBJDIR)/box.o \
-	$(OBJDIR)/soloud_fader.o \
-	$(OBJDIR)/soloud_thread.o \
-	$(OBJDIR)/soloud.o \
-	$(OBJDIR)/soloud_core_setters.o \
-	$(OBJDIR)/soloud_file.o \
-	$(OBJDIR)/soloud_misc.o \
-	$(OBJDIR)/soloud_filter.o \
-	$(OBJDIR)/soloud_core_3d.o \
-	$(OBJDIR)/soloud_bus.o \
-	$(OBJDIR)/soloud_core_voicegroup.o \
-	$(OBJDIR)/soloud_queue.o \
-	$(OBJDIR)/soloud_fft_lut.o \
-	$(OBJDIR)/soloud_core_voiceops.o \
-	$(OBJDIR)/soloud_core_faderops.o \
-	$(OBJDIR)/soloud_fft.o \
-	$(OBJDIR)/soloud_audiosource.o \
-	$(OBJDIR)/soloud_core_basicops.o \
-	$(OBJDIR)/soloud_core_getters.o \
+	$(OBJDIR)/camera.o \
+	$(OBJDIR)/CharacterController.o \
+	$(OBJDIR)/Objet.o \
+	$(OBJDIR)/tuto7.o \
+	$(OBJDIR)/audio.o \
+	$(OBJDIR)/shader.o \
 	$(OBJDIR)/soloud_core_filterops.o \
+	$(OBJDIR)/soloud_fader.o \
+	$(OBJDIR)/soloud_fft_lut.o \
+	$(OBJDIR)/soloud_core_setters.o \
+	$(OBJDIR)/soloud_core_faderops.o \
+	$(OBJDIR)/soloud.o \
+	$(OBJDIR)/soloud_thread.o \
+	$(OBJDIR)/soloud_core_getters.o \
+	$(OBJDIR)/soloud_core_basicops.o \
+	$(OBJDIR)/soloud_misc.o \
+	$(OBJDIR)/soloud_core_3d.o \
+	$(OBJDIR)/soloud_filter.o \
+	$(OBJDIR)/soloud_file.o \
+	$(OBJDIR)/soloud_core_voiceops.o \
+	$(OBJDIR)/soloud_core_voicegroup.o \
+	$(OBJDIR)/soloud_audiosource.o \
+	$(OBJDIR)/soloud_queue.o \
+	$(OBJDIR)/soloud_fft.o \
+	$(OBJDIR)/soloud_bus.o \
 	$(OBJDIR)/soloud_wavstream.o \
 	$(OBJDIR)/dr_impl.o \
 	$(OBJDIR)/soloud_wav.o \
 	$(OBJDIR)/stb_vorbis.o \
 	$(OBJDIR)/soloud_sdl2_static.o \
 	$(OBJDIR)/imgui_widgets.o \
+	$(OBJDIR)/imgui_draw.o \
 	$(OBJDIR)/imgui.o \
 	$(OBJDIR)/imgui_demo.o \
-	$(OBJDIR)/imgui_draw.o \
 	$(OBJDIR)/imgui_impl_sdl.o \
 	$(OBJDIR)/imgui_impl_opengl3.o \
 
@@ -227,148 +227,148 @@ $(GCH): $(PCH)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 endif
 
-$(OBJDIR)/vec.o: src/gKit/vec.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/wavefront.o: src/gKit/wavefront.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/image_io.o: src/gKit/image_io.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/mesh.o: src/gKit/mesh.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/gamepads.o: src/gKit/gamepads.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/app_time.o: src/gKit/app_time.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/mat.o: src/gKit/mat.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/envmap.o: src/gKit/envmap.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/program.o: src/gKit/program.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/image.o: src/gKit/image.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/window.o: src/gKit/window.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/texture.o: src/gKit/texture.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/rgbe.o: src/gKit/rgbe.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/app_camera.o: src/gKit/app_camera.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/image_hdr.o: src/gKit/image_hdr.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/widgets.o: src/gKit/widgets.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/draw.o: src/gKit/draw.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/text.o: src/gKit/text.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/app.o: src/gKit/app.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/orbiter.o: src/gKit/orbiter.cpp
+$(OBJDIR)/program.o: src/gKit/program.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/color.o: src/gKit/color.cpp
+$(OBJDIR)/texture.o: src/gKit/texture.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/image_hdr.o: src/gKit/image_hdr.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/window.o: src/gKit/window.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/mat.o: src/gKit/mat.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/gamepads.o: src/gKit/gamepads.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/uniforms.o: src/gKit/uniforms.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/CharacterController.o: src/Projet-synthese/CharacterController.cpp
+$(OBJDIR)/wavefront.o: src/gKit/wavefront.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/tuto7.o: src/Projet-synthese/tuto7.cpp
+$(OBJDIR)/envmap.o: src/gKit/envmap.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/camera.o: src/Projet-synthese/camera.cpp
+$(OBJDIR)/mesh.o: src/gKit/mesh.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/audio.o: src/Projet-synthese/audio.cpp
+$(OBJDIR)/text.o: src/gKit/text.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/Objet.o: src/Projet-synthese/Objet.cpp
+$(OBJDIR)/rgbe.o: src/gKit/rgbe.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/shader.o: src/Projet-synthese/shader.cpp
+$(OBJDIR)/image.o: src/gKit/image.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/color.o: src/gKit/color.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/app_camera.o: src/gKit/app_camera.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/orbiter.o: src/gKit/orbiter.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/image_io.o: src/gKit/image_io.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/vec.o: src/gKit/vec.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/draw.o: src/gKit/draw.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/widgets.o: src/gKit/widgets.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/box.o: src/Projet-synthese/box.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/camera.o: src/Projet-synthese/camera.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/CharacterController.o: src/Projet-synthese/CharacterController.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/Objet.o: src/Projet-synthese/Objet.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/tuto7.o: src/Projet-synthese/tuto7.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/audio.o: src/Projet-synthese/audio.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/shader.o: src/Projet-synthese/shader.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_filterops.o: libs/soloud20200207/src/core/soloud_core_filterops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/soloud_fader.o: libs/soloud20200207/src/core/soloud_fader.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_thread.o: libs/soloud20200207/src/core/soloud_thread.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud.o: libs/soloud20200207/src/core/soloud.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_setters.o: libs/soloud20200207/src/core/soloud_core_setters.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_file.o: libs/soloud20200207/src/core/soloud_file.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_misc.o: libs/soloud20200207/src/core/soloud_misc.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_filter.o: libs/soloud20200207/src/core/soloud_filter.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_3d.o: libs/soloud20200207/src/core/soloud_core_3d.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_bus.o: libs/soloud20200207/src/core/soloud_bus.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_voicegroup.o: libs/soloud20200207/src/core/soloud_core_voicegroup.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_queue.o: libs/soloud20200207/src/core/soloud_queue.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/soloud_fft_lut.o: libs/soloud20200207/src/core/soloud_fft_lut.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_voiceops.o: libs/soloud20200207/src/core/soloud_core_voiceops.cpp
+$(OBJDIR)/soloud_core_setters.o: libs/soloud20200207/src/core/soloud_core_setters.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/soloud_core_faderops.o: libs/soloud20200207/src/core/soloud_core_faderops.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_fft.o: libs/soloud20200207/src/core/soloud_fft.cpp
+$(OBJDIR)/soloud.o: libs/soloud20200207/src/core/soloud.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_audiosource.o: libs/soloud20200207/src/core/soloud_audiosource.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_basicops.o: libs/soloud20200207/src/core/soloud_core_basicops.cpp
+$(OBJDIR)/soloud_thread.o: libs/soloud20200207/src/core/soloud_thread.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/soloud_core_getters.o: libs/soloud20200207/src/core/soloud_core_getters.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/soloud_core_filterops.o: libs/soloud20200207/src/core/soloud_core_filterops.cpp
+$(OBJDIR)/soloud_core_basicops.o: libs/soloud20200207/src/core/soloud_core_basicops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_misc.o: libs/soloud20200207/src/core/soloud_misc.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_3d.o: libs/soloud20200207/src/core/soloud_core_3d.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_filter.o: libs/soloud20200207/src/core/soloud_filter.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_file.o: libs/soloud20200207/src/core/soloud_file.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_voiceops.o: libs/soloud20200207/src/core/soloud_core_voiceops.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_core_voicegroup.o: libs/soloud20200207/src/core/soloud_core_voicegroup.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_audiosource.o: libs/soloud20200207/src/core/soloud_audiosource.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_queue.o: libs/soloud20200207/src/core/soloud_queue.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_fft.o: libs/soloud20200207/src/core/soloud_fft.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/soloud_bus.o: libs/soloud20200207/src/core/soloud_bus.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/soloud_wavstream.o: libs/soloud20200207/src/audiosource/wav/soloud_wavstream.cpp
@@ -389,13 +389,13 @@ $(OBJDIR)/soloud_sdl2_static.o: libs/soloud20200207/src/backend/sdl2_static/solo
 $(OBJDIR)/imgui_widgets.o: libs/imgui-master/imgui_widgets.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+$(OBJDIR)/imgui_draw.o: libs/imgui-master/imgui_draw.cpp
+	@echo $(notdir $<)
+	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/imgui.o: libs/imgui-master/imgui.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/imgui_demo.o: libs/imgui-master/imgui_demo.cpp
-	@echo $(notdir $<)
-	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-$(OBJDIR)/imgui_draw.o: libs/imgui-master/imgui_draw.cpp
 	@echo $(notdir $<)
 	$(SILENT) $(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 $(OBJDIR)/imgui_impl_sdl.o: libs/imgui-master/examples/imgui_impl_sdl.cpp
