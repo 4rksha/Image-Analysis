@@ -11,7 +11,7 @@ class Box {
     Box(const Point& pmin, const Point& pmax) ;
 
     bool collides3d(const Box& rhs) ;
-    Mesh GetMesh();
+    Mesh & GetMesh();
     Point pmin, pmax ;
     Transform T ;
     Mesh meshcollider;

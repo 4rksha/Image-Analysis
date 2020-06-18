@@ -143,7 +143,7 @@ public:
         return 0;
     }
 
-    void getBoxes(const char *filepath, Objet obj)
+    void getBoxes(const char *filepath, Objet & obj)
     {
         std::string s;
         std::ifstream file(filepath);
@@ -274,7 +274,7 @@ public:
     {
         for (unsigned int i = 0; i < m.boxes.size(); i++)
         {
-            m.boxes[i].T = T;
+            Objets[0]->boxes[i].T = T;
         }
     }
     // dessiner une nouvelle image
@@ -289,7 +289,7 @@ public:
                 {
                     for (unsigned int j = 0; j < Objets[i]->boxes.size(); ++i)
                     {
-                        Mesh m = Objets[i]->boxes[j].GetMesh();
+                        Mesh & m = Objets[i]->boxes[j].meshcollider;
                         m.color(0.f, 1.f, 0.f);
                         draw(m,
                              Objets[i]->boxes[j].T,
