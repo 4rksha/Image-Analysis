@@ -66,13 +66,11 @@ public:
         texCape = read_texture(0, "data/projet/img/robe.png");
         texPlane = read_texture(0, "data/projet/img/black.png");
 
-        m_objet.setNumberCube(1);
         Point pmin, pmax;
         m_objet.mesh.bounds(pmin, pmax);
-        m_objet.cube[0].set_position(pmax, pmin);
-        lit.setNumberCube(1);
+        m_objet.AddBox(pmax, pmin);
         lit.mesh.bounds(pmin, pmax);
-        m_objet.cube[0].set_position(pmax, pmin);
+        m_objet.AddBox(pmax, pmin);
 
         shad.init();
         aud.audio_Init();
@@ -129,10 +127,10 @@ public:
 
     void box_transform(Transform T, Objet m)
     {
-        for (unsigned int i = 0; i < m.cube.size(); i++)
+        for (unsigned int i = 0; i < m.boxes.size(); i++)
         {
-            Cube c = m.cube[i];
-            c.set_position(T(c.get_pmax()), T(c.get_pmin()));
+            Box &b = m.boxes[i];
+            b = Box(T(b.pmax), T(b.pmin));
         }
     }
 
@@ -213,7 +211,7 @@ public:
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
-    void affichetext(const char *s, const char *people, int line_number = 1, bool skippable=false)
+    void affichetext(const char *s, const char *people, int line_number = 1, bool skippable = false)
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame(m_window);
@@ -222,7 +220,8 @@ public:
         ImGui::SetNextWindowSize({400.0f, 50.f + 18.f * line_number});
         ImGui::Begin(people);
         ImGui::Text("%s", s);
-        if (skippable && ImGui::Button("skip")) {
+        if (skippable && ImGui::Button("skip"))
+        {
             delay = 200.f;
             dialogue += 2000 - dialogue % 2000;
         }
@@ -240,16 +239,16 @@ public:
             Point luxPosition;
             if (shad.foudreControle > 2000)
             {
-                luxPosition = (Point)((Point)CC.Position+Point(0,0.2,0)-0.3*(Point)CC.direction());
+                luxPosition = (Point)((Point)CC.Position + Point(0, 0.2, 0) - 0.3 * (Point)CC.direction());
             }
             else
             {
                 luxPosition = Point(10, 0, 10);
             }
             Point Direction = (Point)CC.direction();
-            
-            shad.edraw(m_objet.mesh, CC.getCh2w()*Translation(-0.1,0.3,0)*RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
-            shad.edraw(Cape.mesh, CC.getCh2w()*Translation(0,0.3,0)*RotationX(90)* Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
+
+            shad.edraw(m_objet.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
+            shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
             box_transform(CC.getCh2w() * Scale(0.4, 0.4, 0.4), m_objet);
             shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
             box_transform(Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), lit);
@@ -266,11 +265,11 @@ public:
             shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
             shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
             shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
-            shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5) , m_view, texPiano, luxPosition, Direction);
-            
+            shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction);
+
             if (shad.foudreControle <= 2000)
             {
-                shad.edraw(plane, Translation(CC.Position) * Translation(1.2*CC.direction())*Scale(0.05,0.05,0.05), m_view, texPlane, luxPosition, Direction);
+                shad.edraw(plane, Translation(CC.Position) * Translation(1.2 * CC.direction()) * Scale(0.05, 0.05, 0.05), m_view, texPlane, luxPosition, Direction);
             }
         }
         if (controleindice == 1 && controlefin == 0)
@@ -295,51 +294,40 @@ public:
         }
         if (controlefin == 5)
         {
-            if (dialogue < 2000) 
+            if (dialogue < 2000)
                 affichetext("Hum...? Where am I?", "child", 1, true);
-            if (dialogue < 4000 && dialogue > 2000) 
+            if (dialogue < 4000 && dialogue > 2000)
                 affichetext("What am I doing here?", "child", 1, true);
-            if (dialogue < 6000 && dialogue > 4000) 
+            if (dialogue < 6000 && dialogue > 4000)
                 affichetext("Hello young man.", "voice", 1, true);
-            if (dialogue < 8000 && dialogue > 6000) 
+            if (dialogue < 8000 && dialogue > 6000)
                 affichetext("I am delighted to welcome you.", "voice", 1, true);
-            if (dialogue < 10000 && dialogue > 8000) 
+            if (dialogue < 10000 && dialogue > 8000)
                 affichetext("Who are you?", "child", 1, true);
-            if (dialogue < 12000 && dialogue > 10000) 
+            if (dialogue < 12000 && dialogue > 10000)
                 affichetext("Lets play a game.", "voice", 1, true);
-            if (dialogue < 14000 && dialogue > 12000) 
+            if (dialogue < 14000 && dialogue > 12000)
                 affichetext("You have one hundred and twenty secondes to find\na way to exit.", "voice", 2, true);
-            if (dialogue < 16000 && dialogue > 14000) 
+            if (dialogue < 16000 && dialogue > 14000)
                 affichetext("After this time...", "voice", 1, true);
-            if (dialogue < 18000 && dialogue > 16000) 
+            if (dialogue < 18000 && dialogue > 16000)
                 affichetext("Good Bye.", "voice", 1, true);
-            if (dialogue < 20000 && dialogue > 18000) 
+            if (dialogue < 20000 && dialogue > 18000)
                 affichetext("But I'm magnanimous.", "voice", 1, true);
-            if (dialogue < 22000 && dialogue > 20000) 
+            if (dialogue < 22000 && dialogue > 20000)
                 affichetext("I left you a lamp and some advice to help you.", "voice", 1, true);
-            if (dialogue < 24000 && dialogue > 22000) 
+            if (dialogue < 24000 && dialogue > 22000)
                 affichetext("Listen carrefully.", "voice", 1, true);
-            if (dialogue < 32000 && dialogue > 24000) 
+            if (dialogue < 32000 && dialogue > 24000)
                 affichetext("My first is a place to sleep.\nMy second is  a game from our childhood.\nMy third is a way to grow up.\nMy fourth is.\nMy fifth is.\nMy sixth is. ", "voice", 6, true);
-            if (dialogue < 34000 && dialogue > 32000) 
+            if (dialogue < 34000 && dialogue > 32000)
                 affichetext("Good luck.", "voice", 1, true);
-            if (dialogue > 34000) 
+            if (dialogue > 34000)
                 controlefin = 0;
         }
 
         return 1;
     }
-
-    int CalculateContact(Objet m)
-    {
-        int n = 0;
-        for (unsigned int i = 0; i < m.cube.size(); i++)
-        {
-            n = m_objet.cube[0].calculate_collision(m.cube[i]);
-        }
-        return n;
-    }
-
     void verifPos(Vector v, int &controlePos, int value)
     {
         if (length(CC.Position - v) < 2 && controleindice == 0 && controlePoss[value] == 0)
@@ -363,14 +351,12 @@ public:
         }
         if (controlefin == 0)
         {
-            shad.time = time*0.001;
-            int n = 0;
-            n = CalculateContact(m_terrain);
-            n = CalculateContact(lit);
+            shad.time = time * 0.001;
 
-            if (n == 0 && shad.foudreControle>2000)
+            if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
+                std::cout << CC.Position << std::endl;
             }
             m_view = CC.getCam();
 

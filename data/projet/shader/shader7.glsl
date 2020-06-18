@@ -123,7 +123,7 @@ void main( )
 	{
 		if(foudre<=2000)
 	        {
-		     	lighting = (ambient + (diffuse + specular)) * colore*i*vec3(0.5,0.5,1);
+		     	lighting = (5* flameVar) * (ambient + (diffuse + specular)) * colore*i*vec3(0.2,0.2,1);
 	        }
 		else
 		{

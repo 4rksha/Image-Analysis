@@ -1,13 +1,9 @@
 #include "Objet.h"
 
-void Objet::setNumberCube(int n){
-    for(int i=0;i<n;i++)
-    {
-        Cube c;
-        cube.push_back(c);
-    }
+void Objet::AddBox(Point pmin, Point pmax)
+{   
+    boxes.push_back(Box(pmin, pmax));
 }
-
 Objet::Objet()
 {
 }

@@ -3,9 +3,9 @@
 
 CharacterController::CharacterController()
 {
-    setPosition(Vector(0,0,0));
-	setVelocityMax(2);
-	setVelocityNorm(0);
+    setPosition(Vector(0, 0, 0));
+    setVelocityMax(2);
+    setVelocityNorm(0);
 }
 
 void CharacterController::update(const float dt)
@@ -14,13 +14,13 @@ void CharacterController::update(const float dt)
     {
         turnXZ(1);
     }
-    if(key_state('d') && !key_state('q'))
+    if (key_state('d') && !key_state('q'))
     {
         turnXZ(-1);
     }
-    if(key_state('z') && !key_state('s'))
+    if (key_state('z') && !key_state('s'))
     {
-        if(key_state('a'))
+        if (key_state('a'))
         {
             setVelocityNorm(0.2);
         }
@@ -28,18 +28,18 @@ void CharacterController::update(const float dt)
         {
             setVelocityNorm(0.11);
         }
-        m_ch2w=Translation(-direction() * m_v * 0.1) * m_ch2w;
-        Vector p=position();
-        camera.lookAt((Point)p,5);
-        Position=p;
+        m_ch2w = Translation(-direction() * m_v * 0.1) * m_ch2w;
+        Vector p = position();
+        camera.lookAt((Point)p, 5);
+        Position = p;
     }
     else
     {
         setVelocityNorm(0);
     }
-    if(key_state('s') && !key_state('z'))
+    if (key_state('s') && !key_state('z'))
     {
-        if(key_state('a'))
+        if (key_state('a'))
         {
             setVelocityNorm(0.2);
         }
@@ -47,10 +47,10 @@ void CharacterController::update(const float dt)
         {
             setVelocityNorm(0.1);
         }
-        m_ch2w=Translation(direction() * m_v * 0.1) * m_ch2w;
-        Vector p=position();
-        camera.lookAt((Point)p,5);
-        Position=p;
+        m_ch2w = Translation(direction() * m_v * 0.1) * m_ch2w;
+        Vector p = position();
+        camera.lookAt((Point)p, 5);
+        Position = p;
     }
     else
     {
@@ -58,34 +58,35 @@ void CharacterController::update(const float dt)
     }
 }
 
-Camera& CharacterController::getCam()
+Camera &CharacterController::getCam()
 {
     return camera;
 }
 
-void CharacterController::turnXZ(const float& rot_angle_v)
+void CharacterController::turnXZ(const float &rot_angle_v)
 {
-    m_ch2w=m_ch2w*RotationY(rot_angle_v);
+    m_ch2w = m_ch2w * RotationY(rot_angle_v);
 }
 
-void CharacterController::accelerate(const float& speed_inc)
+void CharacterController::accelerate(const float &speed_inc)
 {
-    m_v+=speed_inc;
+    m_v += speed_inc;
 }
 
 void CharacterController::setVelocityMax(const float vmax)
 {
-    m_vMax=vmax;
+    m_vMax = vmax;
 }
 
-void CharacterController::setPosition(const Vector& p)
+void CharacterController::setPosition(const Vector &p)
 {
-    Position=p;
-    m_ch2w=Translation(p);
+    Position = p;
+    m_ch2w = Translation(p);
 }
 
-void CharacterController::setVelocityNorm(const float v){
-    m_v=v;
+void CharacterController::setVelocityNorm(const float v)
+{
+    m_v = v;
 }
 
 float CharacterController::velocity() const
@@ -95,12 +96,12 @@ float CharacterController::velocity() const
 
 const Vector CharacterController::position() const
 {
-    return (Vector)m_ch2w(Point(0,0,0));
+    return (Vector)m_ch2w(Point(0, 0, 0));
 }
 
 const Vector CharacterController::direction() const
 {
-    return m_ch2w(Vector(0,0,1));
+    return m_ch2w(Vector(0, 0, 1));
 }
 
 Transform CharacterController::getCh2w()

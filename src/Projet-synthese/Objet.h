@@ -3,19 +3,18 @@
 
 
 #include "mesh.h"
-#include "Cube.h"
+#include "box.h"
 #include <vector>
 
 class Objet
-{
-private:
-   
+{   
 public:
-    Mesh mesh; 
-    std::vector<Cube> cube;
     Objet();
     ~Objet();
-    void setNumberCube(int n);
+    void AddBox(Point pmin, Point pmax);
+
+    Mesh mesh; 
+    std::vector<Box> boxes;
 };
 
 
