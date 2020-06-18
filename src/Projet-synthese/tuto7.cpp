@@ -283,7 +283,7 @@ public:
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         if (controlefin == 0)
         {
-            if (debug == 0 || debug == 2)
+            if (debug == 1 || debug == 2)
             {
                 for (unsigned int i = 0; i < Objets.size(); ++i)
                 {
@@ -299,7 +299,7 @@ public:
                     }
                 }
             }
-            if (debug == 1 || debug == 2)
+            if (debug == 0 || debug == 2)
             {
                 Point luxPosition;
                 if (shad.foudreControle > 2000)

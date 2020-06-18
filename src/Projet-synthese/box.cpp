@@ -5,6 +5,39 @@ Box::Box()
   pmin = Origin();
   pmax = Origin();
   T = Identity();
+  meshcollider = Mesh(GL_LINES);
+  Point p1(pmin);
+  Point p2(pmax);
+  Point p3(p1.x, p1.y, p2.z);
+  Point p4(p1.x, p2.y, p1.z);
+  Point p5(p2.x, p1.y, p1.z);
+  Point p6(p1.x, p2.y, p2.z);
+  Point p7(p2.x, p1.y, p2.z);
+  Point p8(p2.x, p2.y, p1.z);
+  meshcollider.vertex(p6);
+  meshcollider.vertex(p2);
+  meshcollider.vertex(p2);
+  meshcollider.vertex(p8);
+  meshcollider.vertex(p8);
+  meshcollider.vertex(p4);
+  meshcollider.vertex(p4);
+  meshcollider.vertex(p6);
+  meshcollider.vertex(p3);
+  meshcollider.vertex(p7);
+  meshcollider.vertex(p7);
+  meshcollider.vertex(p5);
+  meshcollider.vertex(p5);
+  meshcollider.vertex(p1);
+  meshcollider.vertex(p1);
+  meshcollider.vertex(p3);
+  meshcollider.vertex(p6);
+  meshcollider.vertex(p3);
+  meshcollider.vertex(p2);
+  meshcollider.vertex(p7);
+  meshcollider.vertex(p8);
+  meshcollider.vertex(p5);
+  meshcollider.vertex(p4);
+  meshcollider.vertex(p1);
 }
 
 Box::Box(const Point &i_pmin, const Point &i_pmax)
@@ -53,42 +86,4 @@ bool Box::collides3d(const Box &rhs)
     }
   }
   return true;
-}
-
-Mesh Box::GetMesh()
-{
-  Mesh m = Mesh(GL_LINES);
-  Point p1(pmin);
-  Point p2(pmax);
-  Point p3(p1.x, p1.y, p2.z);
-  Point p4(p1.x, p2.y, p1.z);
-  Point p5(p2.x, p1.y, p1.z);
-  Point p6(p1.x, p2.y, p2.z);
-  Point p7(p2.x, p1.y, p2.z);
-  Point p8(p2.x, p2.y, p1.z);
-  m.vertex(p6);
-  m.vertex(p2);
-  m.vertex(p2);
-  m.vertex(p8);
-  m.vertex(p8);
-  m.vertex(p4);
-  m.vertex(p4);
-  m.vertex(p6);
-  m.vertex(p3);
-  m.vertex(p7);
-  m.vertex(p7);
-  m.vertex(p5);
-  m.vertex(p5);
-  m.vertex(p1);
-  m.vertex(p1);
-  m.vertex(p3);
-  m.vertex(p6);
-  m.vertex(p3);
-  m.vertex(p2);
-  m.vertex(p7);
-  m.vertex(p8);
-  m.vertex(p5);
-  m.vertex(p4);
-  m.vertex(p1);
-  return m;
 }

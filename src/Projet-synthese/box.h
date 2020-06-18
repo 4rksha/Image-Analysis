@@ -14,6 +14,7 @@ class Box {
     Mesh GetMesh();
     Point pmin, pmax ;
     Transform T ;
+    Mesh meshcollider;
 } ;
 
 #endif
