@@ -69,6 +69,7 @@ public:
         Objets.push_back(&Cape);
         Cape.mesh = read_mesh("data/projet/mesh/cape.obj");
         plane = read_mesh("data/projet/mesh/chien.obj");
+        Guitare.mesh = read_mesh("data/projet/mesh/guitare.obj");
 
         //initialise les textures
         m_texture = read_texture(0, "data/projet/img/main.png");
@@ -84,6 +85,7 @@ public:
         texPiano = read_texture(0, "data/projet/img/textpiano.png");
         texCape = read_texture(0, "data/projet/img/robe.png");
         texPlane = read_texture(0, "data/projet/img/chien.png");
+        texGuitare = read_texture(0, "data/projet/img/guitare.png");
 
 
         //initialises les boudings box
@@ -146,6 +148,8 @@ public:
         Shelf.mesh.release();
         Piano.mesh.release();
         Cape.mesh.release();
+        Guitare.mesh.release();
+        plane.release();
         glDeleteTextures(1, &m_texture);
         glDeleteTextures(1, &m_text_terrain2);
         glDeleteTextures(1, &m_text_terrain);
@@ -158,6 +162,8 @@ public:
         glDeleteTextures(1, &textFull);
         glDeleteTextures(1, &texPiano);
         glDeleteTextures(1, &texCape);
+        glDeleteTextures(1,&texPlane);
+        glDeleteTextures(1,&texGuitare);
         shad.quit();
         aud.audio_Quit();
 
@@ -360,6 +366,7 @@ public:
                 shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction,shad.getProgram(0));
                 shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction,shad.getProgram(0));
                 shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(Guitare.mesh, Translation(0, 0.4, -6.5)*RotationY(180)*RotationX(90) * Scale(0.1, 0.1, 0.1), m_view, texGuitare, luxPosition, Direction,shad.getProgram(0));
                 if (shad.foudreControle <= 2000)
                 {
                     shad.edraw(plane, Translation(CC.Position) * Translation(1,0.3,0) * RotationY(-90)*Scale(0.3, 0.3, 0.3), m_view, texPlane, luxPosition, Direction,shad.getProgram(1));
@@ -444,14 +451,10 @@ public:
     // vérifie la posisition du personnage par rapport à un indice
     void verifPos(Vector v, int &controlePos, int value)
     {
-        if (length(CC.Position - v) < 2 && controleindice == 0 && controlePoss[value] == 0)
+        if (length(CC.Position - v) < 1 && controleindice == 0 && controlePoss[value] == 0)
         {
             controleindice = 1;
             controlePos = value;
-        }
-        if (length(CC.Position - v) >= 2 &&  controlePoss[value] == 0)
-        {
-            controleindice=0;
         }
     }
 
@@ -527,9 +530,23 @@ public:
             // vérifie si on est à une certaine distance d'un indice et gère les interractions avec
             static int controlePos = -1;
 
-            verifPos(Vector(5.5, 0, 3.5), controlePos, 0);
-            verifPos(Vector(0, 0, -6), controlePos, 1);
+            verifPos(Vector(4.5, 0, 3.5), controlePos, 0);
+            verifPos(Vector(0, 0, -5.0), controlePos, 1);
             verifPos(Vector(-5, 0, -1), controlePos, 2);
+            verifPos(Vector(-3, 0, -7), controlePos, 3);
+            verifPos(Vector(4.5, 0, -5), controlePos, 4);
+            verifPos(Vector(0, 0, 5), controlePos, 5);
+            if(length(CC.Position - Vector(4.5, 0, 3.5)) >= 1 &&
+                length(CC.Position - Vector(0, 0, -5)) >= 1 &&
+                length(CC.Position - Vector(-5, 0, -1)) >= 1 &&
+                length(CC.Position - Vector(-3, 0, -7)) >= 1 &&
+                length(CC.Position - Vector(4.5, 0, -5))>=1 &&
+                length(CC.Position - Vector(0, 0, 5))>=1)
+                
+            {
+                    controleindice=0;
+            }
+
             if (controleindice == 1 && controlePoss[controlePos] == 1)
             {
                 controleindice = 0;
@@ -547,7 +564,7 @@ public:
                 controlefin = 1;
                 aud.pause_audio(aud.getPluie());
             }
-            if (countFoudre == 6)
+            if (countFoudre == 4)
             {
                 controlefin = 2;
                 aud.pause_audio(aud.getPluie());
@@ -591,7 +608,7 @@ public:
             }
 
             //lance un éclair
-            static int j = 20000;
+            static int j = 30000;
             static int timed = 0;
             static int controle = 0;
             if (controle == 0)
@@ -606,7 +623,7 @@ public:
             }
             else
             {
-                j = 20000;
+                j = 30000;
                 shad.foudreControle = j;
                 timed = 0;
                 countFoudre++;
@@ -644,6 +661,7 @@ protected:
     Objet Shelf;
     Objet Piano;
     Objet Cape;
+    Objet Guitare;
     Mesh plane;
 
     // déclaration des textures des objets
@@ -660,6 +678,7 @@ protected:
     GLuint texPlane;
     GLuint texPiano;
     GLuint texCape;
+    GLuint texGuitare;
     //controlleur de déplacement
     CharacterController CC;
 
