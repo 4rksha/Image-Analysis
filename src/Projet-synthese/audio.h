@@ -13,17 +13,26 @@ private:
     SoLoud::Wav vase;
     SoLoud::Wav saut;
     SoLoud::Wav cri;
+    SoLoud::Wav violon;
 public:
     audio();
     ~audio();
+
+    //initialise les sons
     int audio_Init();
+
+    //joue une musique
     void play_audio(SoLoud::Wav & b);
+    //arretes une musique
     void pause_audio(SoLoud::Wav & b);
+    //récupère les musiques à jouer
     SoLoud::Wav & getWav();
     SoLoud::Wav & getVase();
     SoLoud::Wav & getSaut();
     SoLoud::Wav & getPluie();
     SoLoud::Wav & getCri();
+    SoLoud::Wav & getViolon();
+    //détruit les musiques
     void audio_Quit();
 };
 

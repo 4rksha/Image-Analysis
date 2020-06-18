@@ -37,15 +37,17 @@ class shader
 {
 public:
     void init();
-    void reloade_program();
-    void edraw(Mesh & mesh,Transform  T,Orbiter  & camera,GLuint  & texture,Point luxPosition,Point Direction);
+    void reloade_program(GLuint & program);
+    void edraw(Mesh & mesh,Transform  T,Orbiter  & camera,GLuint  & texture,Point luxPosition,Point Direction,GLuint & Porgram);
     void quit();
+    GLuint & getProgram(int i);
     int foudreControle;
     int nbindice=0;
     float time=0.0;
 protected :
     Filename program_filename;
     GLuint program;
+    GLuint program1;
     Widgets widgets;
 
     // affichage des erreurs

@@ -9,8 +9,11 @@ void shader::init()
 {
     widgets= create_widgets();
     program= 0;
+    program1=0;
     program_filename= Filename("data/projet/shader/shader7.glsl");
-    reloade_program();
+    reloade_program(program);
+    program_filename= Filename("data/projet/shader/shader6.glsl");
+    reloade_program(program1);
     glUseProgram(0);
     glBindTexture(GL_TEXTURE_2D, 0);
     glBindVertexArray(0);
@@ -27,15 +30,15 @@ void shader::init()
     glEnable(GL_DEPTH_TEST);
 }
 
-void shader::reloade_program( )
+void shader::reloade_program(GLuint & Program )
 {
-    if(program == 0)
-        program= read_program(program_filename);
+    if(Program == 0)
+        Program= read_program(program_filename);
     else
-        reload_program(program, program_filename);
+        reload_program(Program, program_filename);
     
     // recupere les erreurs, si necessaire
-    program_area= program_format_errors(program, program_log);
+    program_area= program_format_errors(Program, program_log);
     
     if(program_log.size() > 0)
         printf("[boom]\n%s\n", program_log.c_str());
@@ -46,43 +49,48 @@ void shader::reloade_program( )
 void shader::quit()
 {
     release_program(program);
+    release_program(program1);
 }
 
-void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Point luxPosition,Point Direction)
+GLuint & shader::getProgram(int i)
+{
+    if(i==0) return program;
+    if(i==1) return program1;
+    return program;
+}
+
+void shader::edraw(Mesh &mesh,Transform T,Orbiter & camera,GLuint & texture,Point luxPosition,Point Direction,GLuint & Program)
 {
     // recupere les transformations
     
     Transform model= T;
     Transform view= camera.view();
     Transform projection= camera.projection(window_width(), window_height(), 45);
-    Transform viewport= Viewport(window_width(), window_height());
     
     Transform mvp= projection * view * model;
-    Transform mvpInv= Inverse(mvp);
-    Transform mv= model * view;
     
     GLuint vao= mesh.create_buffers(mesh.has_texcoord(), mesh.has_normal(), mesh.has_color());
         
     // configuration minimale du pipeline
     glBindVertexArray(vao);
-    glUseProgram(program);
+    glUseProgram(Program);
 
     // affecte une valeur aux uniforms
     // transformations standards
-    program_uniform(program, "modelMatrix", model);
-    program_uniform(program, "viewInvMatrix", view.inverse());
+    program_uniform(Program, "modelMatrix", model);
+    program_uniform(Program, "viewInvMatrix", view.inverse());
 
     
-    program_uniform(program, "mvpMatrix", mvp);
+    program_uniform(Program, "mvpMatrix", mvp);
     
-    program_uniform(program, "source", luxPosition);
-    program_uniform(program,"direction",Point(0,0,0)-Direction);
-    program_uniform(program, "foudre", foudreControle);
-    program_uniform(program,"time",time);
+    program_uniform(Program, "source", luxPosition);
+    program_uniform(Program,"direction",Point(0,0,0)-Direction);
+    program_uniform(Program, "foudre", foudreControle);
+    program_uniform(Program,"time",time);
 
     char uniform[1024];
     sprintf(uniform, "diffuse_color");
-    program_use_texture(program, uniform, 1, texture);
+    program_use_texture(Program, uniform, 1, texture);
     
     
     // textures

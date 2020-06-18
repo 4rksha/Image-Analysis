@@ -108,3 +108,11 @@ Transform CharacterController::getCh2w()
 {
     return m_ch2w;
 }
+
+void CharacterController::setCh2w(Transform T)
+{
+    m_ch2w=T;
+    Vector p = position();
+    camera.lookAt((Point)p, 5);
+    Position=p;
+}

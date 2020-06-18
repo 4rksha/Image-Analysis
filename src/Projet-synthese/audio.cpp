@@ -21,6 +21,8 @@ int audio::audio_Init()
     saut.setLooping(1);
     saut.load("data/projet/audio/saut.wav");
     cri.load("data/projet/audio/cri.wav");
+    violon.setLooping(1);
+    violon.load("data/projet/audio/violon.wav");
     return 0;
 }
 
@@ -43,6 +45,10 @@ SoLoud::Wav & audio::getPluie()
 SoLoud::Wav & audio::getCri()
 {
     return cri;
+}
+SoLoud::Wav & audio::getViolon()
+{
+    return violon;
 }
 
 void audio::play_audio(SoLoud::Wav & b)

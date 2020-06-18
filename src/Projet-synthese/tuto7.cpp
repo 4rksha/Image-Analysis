@@ -29,7 +29,7 @@ public:
     // creation des objets de l'application
     int init()
     {
-
+        //initialise l'interface
         IMGUI_CHECKVERSION();
         ImGui::CreateContext();
         ImGuiIO &io = ImGui::GetIO();
@@ -38,6 +38,8 @@ public:
         ImGui_ImplSDL2_InitForOpenGL(this->m_window, this->m_context);
         ImGui_ImplOpenGL3_Init("#version 330");
 
+
+        //initialise les meshs
         Objets.push_back(&m_caracter);
         m_caracter.mesh = read_mesh("data/projet/mesh/main.obj");
         Objets.push_back(&m_terrain);
@@ -66,12 +68,13 @@ public:
         Piano.mesh = read_mesh("data/projet/mesh/piano.obj");
         Objets.push_back(&Cape);
         Cape.mesh = read_mesh("data/projet/mesh/cape.obj");
-        plane = read_mesh("data/bigguy.obj");
+        plane = read_mesh("data/projet/mesh/chien.obj");
 
+        //initialise les textures
         m_texture = read_texture(0, "data/projet/img/main.png");
         m_text_terrain = read_texture(0, "data/projet/img/sale2text.png");
         text_lit = read_texture(0, "data/projet/img/lit.png");
-        m_text_terrain2 = read_texture(0, "data/projet/img/textureTerrain.png");
+        m_text_terrain2 = read_texture(0, "data/projet/img/textureTerrain2.png");
         textChev = read_texture(0, "data/projet/img/textCheval.png");
         textCoussin = read_texture(0, "data/projet/img/textCoussin1.png");
         tCanape = read_texture(0, "data/projet/img/textCanapé.png");
@@ -80,15 +83,33 @@ public:
         textFull = read_texture(0, "data/projet/img/shelf_pleine.png");
         texPiano = read_texture(0, "data/projet/img/textpiano.png");
         texCape = read_texture(0, "data/projet/img/robe.png");
-        texPlane = read_texture(0, "data/projet/img/black.png");
+        texPlane = read_texture(0, "data/projet/img/chien.png");
 
+
+        //initialises les boudings box
         Point pmin, pmax;
         Cape.mesh.bounds(pmin, pmax);
         m_caracter.AddBox(pmin, pmax, Identity());
         lit.mesh.bounds(pmin, pmax);
         lit.AddBox(pmin, pmax, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3));
+        cheval.mesh.bounds(pmin, pmax);
+        cheval.AddBox(pmin, pmax, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2));
+        coussin1.mesh.bounds(pmin, pmax);
+        coussin1.AddBox(pmin, pmax, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3));
+        coussin2.mesh.bounds(pmin, pmax);
+        coussin2.AddBox(pmin, pmax, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3));
+        canape.mesh.bounds(pmin, pmax);
+        canape.AddBox(pmin, pmax, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4));
+        vase.mesh.bounds(pmin, pmax);
+        vase.AddBox(pmin, pmax, Translation(4, 0, -6) * Scale(0.2, 0.2, 0.2));
+        vaseC.mesh.bounds(pmin, pmax);
+        vaseC.AddBox(pmin, pmax, Translation(4.5, 0.1, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2));
+        Shelf.mesh.bounds(pmin, pmax);
+        Shelf.AddBox(pmin, pmax, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3));
+        Piano.mesh.bounds(pmin, pmax);
+        Piano.AddBox(pmin, pmax, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5));
 
-        getBoxes("data/projet/boites/sale2.txt", m_terrain);
+        //getBoxes("data/projet/boites/sale2.txt", m_terrain);
 
         shad.init();
         aud.audio_Init();
@@ -143,6 +164,7 @@ public:
         return 0;
     }
 
+    // lis et crée les boxes de collisions autour des murs à partir d'un fichier
     void getBoxes(const char *filepath, Objet & obj)
     {
         std::string s;
@@ -152,7 +174,6 @@ public:
 
             getline(file, s);
             int nbPoint = atoi(s.c_str());
-            std::cout << nbPoint << std::endl;
             Point p[nbPoint];
             for (int i = 0; i < nbPoint; ++i)
             {
@@ -174,6 +195,7 @@ public:
         }
     }
 
+    // crée et affiche la touche à presser à proximité d'un indice
     void afficheE()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -187,6 +209,7 @@ public:
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
+    // crée et affiche le message de victoire
     void afficheWin()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -200,6 +223,8 @@ public:
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
+
+    // crée et affiche le message de perte
     void afficheLoose()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -214,13 +239,14 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
+    // crée et affiche le menu principal
     void afficheMenu()
     {
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
         ImGui::SetNextWindowPos(ImVec2(480, 250));
-        ImGui::Begin("Menu"); // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        ImGui::Begin("Menu"); 
         if (ImGui::Button("Play"))
         {
             controlefin = 5;
@@ -233,6 +259,7 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
+    // crée et affiche le menu de presentation des touches
     void afficheInfo()
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -251,6 +278,8 @@ public:
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
+
+    // crée et affiche la boite de dialogue
     void affichetext(const char *s, const char *people, int line_number = 1, bool skippable = false)
     {
         ImGui_ImplOpenGL3_NewFrame();
@@ -270,6 +299,7 @@ public:
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
+    //applique une transformation à une boite de collision
     void box_transform(Transform &T, Objet m)
     {
         for (unsigned int i = 0; i < m.boxes.size(); i++)
@@ -277,9 +307,11 @@ public:
             Objets[0]->boxes[i].T = T;
         }
     }
-    // dessiner une nouvelle image
+
+    // dessine une nouvelle image
     int render()
     {
+        //affiche les boxs de collisions
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         if (controlefin == 0)
         {
@@ -299,6 +331,7 @@ public:
                     }
                 }
             }
+            //affiche la scène principale
             if (debug == 0 || debug == 2)
             {
                 Point luxPosition;
@@ -312,47 +345,65 @@ public:
                 }
                 Point Direction = (Point)CC.direction();
 
-                shad.edraw(m_caracter.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction);
-                shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction);
-                shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction);
-                shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction);
-                shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction);
-                shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction);
-                shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
-                shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction);
-                shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction);
-                shad.edraw(vase.mesh, Translation(5, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
-                shad.edraw(vaseC.mesh, Translation(5.5, 0.1, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction);
-                shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
-                shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction);
-                shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction);
-                shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction);
+                shad.edraw(m_caracter.mesh, CC.getCh2w() * Translation(-0.1, 0.3, 0) * RotationY(-90) * Scale(0.08, 0.1, 0.05), m_view, m_texture, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(Cape.mesh, CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2), m_view, texCape, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(lit.mesh, Translation(0, 0, -6) * Scale(0.3, 0.3, 0.3), m_view, text_lit, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(m_terrain.mesh, Identity(), m_view, m_text_terrain, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(m_terrain2.mesh, Translation(0, -2, 0) * Scale(20, 10, 20), m_view, m_text_terrain2, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(cheval.mesh, Translation(2, 0, 3) * Scale(0.2, 0.2, 0.2), m_view, textChev, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(coussin1.mesh, Translation(4, 0, 2) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(coussin2.mesh, Translation(4, 0, 3.5) * Scale(0.3, 0.3, 0.3), m_view, textCoussin, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(canape.mesh, Translation(5.5, 0, 3.5) * Scale(0.4, 0.4, 0.4), m_view, tCanape, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(vase.mesh, Translation(4, 0, -6) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(vaseC.mesh, Translation(4.5, 0.15, -5) * RotationX(-75) * Scale(0.2, 0.2, 0.2), m_view, tVase, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(CouteauSang.mesh, Translation(-1, 0.7, -7) * RotationX(-90) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(CouteauSang.mesh, Translation(1, 0.7, -7) * RotationX(90) * RotationY(180) * Scale(0.05, 0.05, 0.05), m_view, tCouteau, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction,shad.getProgram(0));
+                shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction,shad.getProgram(0));
                 if (shad.foudreControle <= 2000)
                 {
-                    shad.edraw(plane, Translation(CC.Position) * Translation(1.2 * CC.direction()) * Scale(0.05, 0.05, 0.05), m_view, texPlane, luxPosition, Direction);
+                    shad.edraw(plane, Translation(CC.Position) * Translation(1,0.3,0) * RotationY(-90)*Scale(0.3, 0.3, 0.3), m_view, texPlane, luxPosition, Direction,shad.getProgram(1));
+                    if(actionEc==1)
+                    {
+                        affichetext("I see you.", "voice", 1, true);
+                    }
+                    if(actionEc==2)
+                    {
+                        affichetext("tic tac tic tac.", "voice", 1, true);
+                    }
+                    if(actionEc==3)
+                    {
+                        affichetext("oups.", "voice", 1, true);
+                    }
                 }
             }
         }
+        //affiche la touche à presser si on est à proximité d'un indice
         if (controleindice == 1 && controlefin == 0)
         {
             afficheE();
         }
+        //affiche si l'on gagne
         if (controlefin == 1)
         {
             afficheWin();
         }
+        //affiche si l'on perd
         if (controlefin == 2)
         {
             afficheLoose();
         }
+        //affiche le menu principal
         if (controlefin == 3)
         {
             afficheMenu();
         }
+        //affiche le menu d'expliquation des touches
         if (controlefin == 4)
         {
             afficheInfo();
         }
+        //affiche les dialogues
         if (controlefin == 5)
         {
             if (dialogue < 2000)
@@ -389,6 +440,8 @@ public:
 
         return 1;
     }
+
+    // vérifie la posisition du personnage par rapport à un indice
     void verifPos(Vector v, int &controlePos, int value)
     {
         if (length(CC.Position - v) < 2 && controleindice == 0 && controlePoss[value] == 0)
@@ -396,10 +449,33 @@ public:
             controleindice = 1;
             controlePos = value;
         }
+        if (length(CC.Position - v) >= 2 &&  controlePoss[value] == 0)
+        {
+            controleindice=0;
+        }
     }
 
+    // vérifie si l'on touche un objet ou non
+    bool verifCollide()
+    {
+        bool n=false;
+        for(unsigned int j=1;j<Objets.size();j++)
+        {
+            for(unsigned int k=0;k<Objets[j]->boxes.size();k++)
+            {
+                n=Objets[0]->boxes[0].collides3d(Objets[j]->boxes[k]);
+                if(n==true)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+        
+    }
     int update(const float time, const float delta)
     {
+        //boucle de dialogue
         if (controlefin == 5)
         {
             dialogue += delta;
@@ -410,8 +486,10 @@ public:
                 dialogue += 2000 - dialogue % 2000;
             }
         }
+        //boucle principal
         if (controlefin == 0)
         {
+            //affiche les boxs de collisions
             delay -= delta;
             if (key_state('g') && delay <= 0)
             {
@@ -419,16 +497,25 @@ public:
                 delay = 200.f;
                 std::cout << "DEBUG Toggled !" << std::endl;
             }
-            shad.time = time * 0.001;
 
+            //controle les déplacements en fonction des boxs de collisions
+            shad.time = time * 0.001;
+            bool n=false;
+            Transform T1=CC.getCh2w();
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
+                n=verifCollide();
+                if(n==true)
+                {
+                    CC.setCh2w(T1);
+                }
+                Transform T = Translation(CC.Position) * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
             }
             m_view = CC.getCam();
 
+            // vérifie si on est à une certaine distance d'un indice et gère les interractions avec
             static int controlePos = -1;
 
             verifPos(Vector(5.5, 0, 3.5), controlePos, 0);
@@ -444,6 +531,8 @@ public:
                 clear_key_state('e');
                 controlePoss[controlePos] = 1;
             }
+
+            // vérifie si l'on à gagné ou perdu
             if (shad.nbindice == 6)
             {
                 controlefin = 1;
@@ -456,6 +545,7 @@ public:
                 aud.play_audio(aud.getCri());
             }
 
+            //lance ou éteint les bruits de pas
             static int controleMusic = 0;
 
             if ((key_state('s') || key_state('z') || key_state('q') || key_state('d')) && controleMusic == 0)
@@ -469,6 +559,7 @@ public:
                 aud.pause_audio(aud.getWav());
             }
 
+            //lance le bruit de brisure du vase
             static int controleVase = 0;
             if (length(CC.Position - Vector(5, 0, -6)) < 6 && controleVase == 0)
             {
@@ -476,6 +567,7 @@ public:
                 controleVase = 1;
             }
 
+            //lance ou éteint les bruits à proximité du canapé
             static int controleSaut = 0;
 
             if (length(CC.Position - Vector(5.5, 0, 3.5)) < 4 && controleSaut == 0)
@@ -489,6 +581,7 @@ public:
                 aud.pause_audio(aud.getSaut());
             }
 
+            //lance un éclair
             static int j = 20000;
             static int timed = 0;
             static int controle = 0;
@@ -508,13 +601,26 @@ public:
                 shad.foudreControle = j;
                 timed = 0;
                 countFoudre++;
+                actionEc++;
+            }
+            timed += delta;
+
+            //lance le son d'un violon après le premier éclair
+            static int violon =0;
+            if(violon==0 && actionEc==1)
+            {
+                aud.play_audio(aud.getViolon());
+                violon=1;
             }
             timed += delta;
         }
         return 1;
     }
 
+
+
 protected:
+    //déclaration des objets à afficher
     Objet m_caracter;
     Objet m_terrain;
     Objet m_terrain2;
@@ -530,6 +636,8 @@ protected:
     Objet Piano;
     Objet Cape;
     Mesh plane;
+
+    // déclaration des textures des objets
     GLuint m_texture;
     GLuint m_text_terrain;
     GLuint m_text_terrain2;
@@ -543,11 +651,19 @@ protected:
     GLuint texPlane;
     GLuint texPiano;
     GLuint texCape;
+    //controlleur de déplacement
     CharacterController CC;
+
+    //caméra
     Orbiter m_view;
+    //shader
     shader shad;
+    //audio
     audio aud;
+    //accès rapide aux objets
     std::vector<Objet *> Objets;
+
+    //controle les évènements
     int controleindice = 0;
     int controlefin = 3;
     int controlePoss[6] = {0};
@@ -555,6 +671,7 @@ protected:
     int countFoudre = 0;
     int delay = 0;
     int debug = 0;
+    int actionEc=0;
 };
 
 int main(int argc, char **argv)

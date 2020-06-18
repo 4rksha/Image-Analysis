@@ -8,6 +8,7 @@
 class Camera : public Orbiter
 {
     public:
+        //définie la position de la caméra
         void lookAt(const Point & center,const float size);
     private:
         Transform camT;
