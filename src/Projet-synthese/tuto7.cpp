@@ -109,8 +109,13 @@ public:
         Piano.mesh.bounds(pmin, pmax);
         Piano.AddBox(pmin, pmax, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5));
 
-        //getBoxes("data/projet/boites/sale2.txt", m_terrain);
-
+        getBoxes("data/projet/boites/sale2.txt", m_terrain);
+        std::cout << std::endl;
+        for (unsigned int i = 0; i < m_terrain.boxes.size(); ++i)
+        {
+            std::cout << i << ":(" << m_terrain.boxes[i].pmin << ", " << m_terrain.boxes[i].pmax << ")" << std::endl;
+        }
+        std::cout << std::endl;
         shad.init();
         aud.audio_Init();
         // etat openGL par defaut
@@ -178,7 +183,8 @@ public:
 
             getline(file, s);
             int nbPoint = atoi(s.c_str());
-            Point p[nbPoint];
+            Point p[nbPoint * 2];
+            Transform t[nbPoint];
             for (int i = 0; i < nbPoint; ++i)
             {
                 getline(file, s);
@@ -187,11 +193,23 @@ public:
                 ss >> x;
                 ss >> y;
                 ss >> z;
-                p[i] = Point(x, y, z);
+                p[i * 2] = Point(x, y, z);
+                getline(file, s);
+                std::istringstream ss2(s);
+                ss2 >> x;
+                ss2 >> y;
+                ss2 >> z;
+                p[i * 2 + 1] = Point(x, y, z);
+                getline(file, s);
+                float angle = atoi(s.c_str());
+                if (angle == 0)
+                    t[i] = Identity();
+                else
+                    t[i] = RotationY(angle);
             }
             file.close();
-            for (int i = 0; i < nbPoint; i += 2)
-                obj.AddBox(p[i], p[i + 1], Identity());
+            for (int i = 0; i < nbPoint; i++)
+                obj.AddBox(p[i*2], p[i*2 + 1], t[i]);
         }
         else
         {
@@ -323,10 +341,9 @@ public:
             {
                 for (unsigned int i = 0; i < Objets.size(); ++i)
                 {
-                    for (unsigned int j = 0; j < Objets[i]->boxes.size(); ++i)
+                    for (unsigned int j = 0; j < Objets[i]->boxes.size(); ++j)
                     {
                         Mesh &m = Objets[i]->boxes[j].meshcollider;
-                        m.color(0.f, 1.f, 0.f);
                         draw(m,
                              Objets[i]->boxes[j].T,
                              m_view.view(),
@@ -458,7 +475,7 @@ public:
     }
 
     // vérifie si l'on touche un objet ou non
-    bool verifCollide(Vector &x, int & s)
+    bool verifCollide(Vector &x, int &s)
     {
         bool n = false;
         for (unsigned int i = 1; i < Objets.size(); i++)
@@ -468,7 +485,7 @@ public:
                 n = Objets[0]->boxes[0].collides3d(Objets[i]->boxes[j], x);
                 if (n == true)
                 {
-                    s=i;
+                    s = i;
                     return true;
                 }
             }
@@ -508,31 +525,31 @@ public:
             if (shad.foudreControle > 2000)
             {
                 CC.update(delta);
-                if (verifCollide(x,s))
+                std::cout << CC.Position << std::endl;
+                if (verifCollide(x, s))
                 {
-                    CC.setCh2w(T1 * Translation(Vector(0,0,0.1)));
+                    CC.setCh2w(T1 * Translation(Vector(0, 0, 0.1)));
                     Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                     box_transform(T, m_caracter);
-                    if (verifCollide(x,s))
+                    if (verifCollide(x, s))
                     {
-                        CC.setCh2w(T1 * Translation(Vector(0,0,-0.1)));
+                        CC.setCh2w(T1 * Translation(Vector(0, 0, -0.1)));
                         Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                         box_transform(T, m_caracter);
-                        if (verifCollide(x,s)) 
+                        if (verifCollide(x, s))
                         {
-                            CC.setCh2w(T1 * Translation(Vector(0.1,0,0)));
+                            CC.setCh2w(T1 * Translation(Vector(0.1, 0, 0)));
                             Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                             box_transform(T, m_caracter);
-                            if (verifCollide(x,s)) 
+                            if (verifCollide(x, s))
                             {
-                                CC.setCh2w(T1 * Translation(Vector(-0.1,0,0)));
+                                CC.setCh2w(T1 * Translation(Vector(-0.1, 0, 0)));
                             }
                         }
                     }
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
-                
             }
             m_view = CC.getCam();
 
@@ -617,7 +634,7 @@ public:
             }
 
             //lance un éclair
-            static int j = 30000;
+            static int j = 60000;
             static int timed = 0;
             static int controle = 0;
             if (controle == 0)
@@ -632,7 +649,7 @@ public:
             }
             else
             {
-                j = 30000;
+                j = 600000;
                 shad.foudreControle = j;
                 timed = 0;
                 countFoudre++;

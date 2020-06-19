@@ -6,6 +6,7 @@ void Objet::AddBox(Point pmin, Point pmax, Transform T)
     b.T = T;
     boxes.push_back(b);
 }
+
 Objet::Objet()
 {
 }
