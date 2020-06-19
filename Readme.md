@@ -2,11 +2,11 @@
 
 Barros Mikel-ange & Beddalia Zacharia
 
-#librairie à installer
+# librairie à installer
 
 sudo apt-get install libsdl2-dev libsdl2-image-dev libglew-dev premake4
 
-#Comment compiler
+# Comment compiler
 
 exécuter les commandes suivantes dans l'ordre
 
@@ -18,7 +18,7 @@ make
 
 ## Le projet ne compile que sous linux
 
-#Comment jouer
+# Comment jouer
 
 ## Lancer le jeu
 
