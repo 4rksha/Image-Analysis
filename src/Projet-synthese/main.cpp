@@ -69,6 +69,7 @@ public:
         Cape.mesh = read_mesh("data/projet/mesh/cape.obj");
         plane = read_mesh("data/projet/mesh/chien.obj");
         Guitare.mesh = read_mesh("data/projet/mesh/guitare.obj");
+        back = read_mesh("data/projet/mesh/background.obj");
 
         //initialise les textures
         m_texture = read_texture(0, "data/projet/img/main.png");
@@ -84,7 +85,8 @@ public:
         texPiano = read_texture(0, "data/projet/img/textpiano.png");
         texCape = read_texture(0, "data/projet/img/robe.png");
         texPlane = read_texture(0, "data/projet/img/chien.png");
-        texGuitare = read_texture(0, "data/projet/img/guitare.png");
+        texGuitare = read_texture(0, "data/projet/img/textureTerrain2.png");
+        Font = read_texture(0, "data/projet/img/background.png");
 
         //initialises les boudings box
         Point pmin, pmax;
@@ -147,6 +149,7 @@ public:
         Cape.mesh.release();
         Guitare.mesh.release();
         plane.release();
+        back.release();
         glDeleteTextures(1, &m_texture);
         glDeleteTextures(1, &m_text_terrain2);
         glDeleteTextures(1, &m_text_terrain);
@@ -161,6 +164,7 @@ public:
         glDeleteTextures(1, &texCape);
         glDeleteTextures(1, &texPlane);
         glDeleteTextures(1, &texGuitare);
+        glDeleteTextures(1, &Font);
         shad.quit();
         aud.audio_Quit();
 
@@ -258,10 +262,12 @@ public:
     // crée et affiche le menu principal
     void afficheMenu()
     {
+        Orbiter o=Orbiter();
+        draw(back,Translation(0,1,0)*RotationX(90),o,Font);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplSDL2_NewFrame(m_window);
         ImGui::NewFrame();
-        ImGui::SetNextWindowPos(ImVec2(480, 250));
+        ImGui::SetNextWindowPos(ImVec2(480, 350));
         ImGui::Begin("Menu");
         if (ImGui::Button("Play"))
         {
@@ -685,6 +691,7 @@ protected:
     Objet Cape;
     Objet Guitare;
     Mesh plane;
+    Mesh back;
 
     // déclaration des textures des objets
     GLuint m_texture;
@@ -701,6 +708,7 @@ protected:
     GLuint texPiano;
     GLuint texCape;
     GLuint texGuitare;
+    GLuint Font;
     //controlleur de déplacement
     CharacterController CC;
 
