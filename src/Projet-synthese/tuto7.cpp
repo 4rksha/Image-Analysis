@@ -448,7 +448,7 @@ public:
             if (dialogue < 24000 && dialogue > 22000)
                 affichetext("Listen carrefully.", "voice", 1, true);
             if (dialogue < 32000 && dialogue > 24000)
-                affichetext("My first is a place to sleep.\nMy second is  a game from our childhood.\nMy third is a way to grow up.\nMy fourth is where you are not allowed to jump.\nMy fifth is where the white and the black sing in harmony. ", "voice", 5, true);
+                affichetext("My first is a place to sleep.\nMy second is  a game from our childhood.\nMy third is a way to grow up.\nMy fourth is where you are not allowed to jump.\nMy fifth is where the white and the black sing in harmony.\n My last is next to what you seek", "voice", 6, true);
             if (dialogue < 34000 && dialogue > 32000) 
                 affichetext("We will let you guess the last one", "voice", 1, true);
 

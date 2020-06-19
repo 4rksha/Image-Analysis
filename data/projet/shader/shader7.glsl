@@ -80,7 +80,7 @@ void main( )
             i=0.08;
         }
     }
-    if(foudre<=2000)
+    if(foudre<=3000)
     {
 	    i=1;
     }
@@ -121,7 +121,7 @@ void main( )
     	}
 	else
 	{
-		if(foudre<=2000)
+		if(foudre<=3000)
 	        {
 		     	lighting = (5* flameVar) * (ambient + (diffuse + specular)) * colore*i*vec3(0.2,0.2,1);
 	        }
