@@ -14,6 +14,7 @@ private:
     SoLoud::Wav saut;
     SoLoud::Wav cri;
     SoLoud::Wav violon;
+    SoLoud::Wav thunder;
 public:
     audio();
     ~audio();
@@ -32,6 +33,7 @@ public:
     SoLoud::Wav & getPluie();
     SoLoud::Wav & getCri();
     SoLoud::Wav & getViolon();
+    SoLoud::Wav & getThunder();
     //détruit les musiques
     void audio_Quit();
 };

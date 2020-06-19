@@ -22,11 +22,11 @@ void CharacterController::update(const float dt)
     {
         if (key_state('a'))
         {
-            setVelocityNorm(0.3);
+            setVelocityNorm(0.2);
         }
         else
         {
-            setVelocityNorm(0.2);
+            setVelocityNorm(0.1);
         }
         m_ch2w = Translation(-direction() * m_v * 0.1) * m_ch2w;
         Vector p = position();

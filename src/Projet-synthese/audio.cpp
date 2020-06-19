@@ -22,7 +22,8 @@ int audio::audio_Init()
     saut.load("data/projet/audio/saut.wav");
     cri.load("data/projet/audio/cri.wav");
     violon.setLooping(1);
-    violon.load("data/projet/audio/violon.wav");
+    violon.load("data/projet/audio/creepy.wav");
+    thunder.load("data/projet/audio/thunder.wav");
     return 0;
 }
 
@@ -49,6 +50,11 @@ SoLoud::Wav & audio::getCri()
 SoLoud::Wav & audio::getViolon()
 {
     return violon;
+}
+
+SoLoud::Wav & audio::getThunder()
+{
+    return thunder;
 }
 
 void audio::play_audio(SoLoud::Wav & b)

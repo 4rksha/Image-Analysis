@@ -110,12 +110,6 @@ public:
         Piano.AddBox(pmin, pmax, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5));
 
         getBoxes("data/projet/boites/sale2.txt", m_terrain);
-        std::cout << std::endl;
-        for (unsigned int i = 0; i < m_terrain.boxes.size(); ++i)
-        {
-            std::cout << i << ":(" << m_terrain.boxes[i].pmin << ", " << m_terrain.boxes[i].pmax << ")" << std::endl;
-        }
-        std::cout << std::endl;
         shad.init();
         aud.audio_Init();
         // etat openGL par defaut
@@ -356,9 +350,10 @@ public:
             if (debug == 0 || debug == 2)
             {
                 Point luxPosition;
-                if (shad.foudreControle > 2000)
+                if (shad.foudreControle > 3000)
                 {
                     luxPosition = (Point)((Point)CC.Position + Point(0, 0.2, 0) - 0.3 * (Point)CC.direction());
+
                 }
                 else
                 {
@@ -382,9 +377,9 @@ public:
                 shad.edraw(Shelf.mesh, Translation(-5, 0, -1) * RotationY(90) * Scale(0.3, 0.3, 0.3), m_view, textFull, luxPosition, Direction, shad.getProgram(0));
                 shad.edraw(Piano.mesh, Translation(0, 0, -1) * Scale(0.5, 0.5, 0.5), m_view, texPiano, luxPosition, Direction, shad.getProgram(0));
                 shad.edraw(Guitare.mesh, Translation(0, 0.4, -6.5) * RotationY(180) * RotationX(90) * Scale(0.1, 0.1, 0.1), m_view, texGuitare, luxPosition, Direction, shad.getProgram(0));
-                if (shad.foudreControle <= 2000)
+                if (shad.foudreControle <= 3000)
                 {
-                    shad.edraw(plane, Translation(CC.Position) * Translation(1, 0.3, 0) * RotationY(-90) * Scale(0.3, 0.3, 0.3), m_view, texPlane, luxPosition, Direction, shad.getProgram(1));
+                    shad.edraw(plane, Translation(CC.Position) * Translation(-1, 0.8, 0) * RotationY(90) * Scale(0.8, 0.8, 0.8), m_view, texPlane, luxPosition, Direction, shad.getProgram(1));
                     if (actionEc == 1)
                     {
                         affichetext("I see you.", "voice", 1, true);
@@ -395,7 +390,7 @@ public:
                     }
                     if (actionEc == 3)
                     {
-                        affichetext("oups.", "voice", 1, true);
+                        affichetext("oof.", "voice", 1, true);
                     }
                 }
             }
@@ -428,7 +423,6 @@ public:
         //affiche les dialogues
         if (controlefin == 5)
         {
-            controlefin = 0;
             if (dialogue < 2000)
                 affichetext("Hum...? Where am I?", "child", 1, true);
             if (dialogue < 4000 && dialogue > 2000)
@@ -436,7 +430,7 @@ public:
             if (dialogue < 6000 && dialogue > 4000)
                 affichetext("Hello young man.", "voice", 1, true);
             if (dialogue < 8000 && dialogue > 6000)
-                affichetext("I am delighted to welcome you.", "voice", 1, true);
+                affichetext("We are delighted to welcome you.", "voice", 1, true);
             if (dialogue < 10000 && dialogue > 8000)
                 affichetext("Who are you?", "child", 1, true);
             if (dialogue < 12000 && dialogue > 10000)
@@ -448,13 +442,16 @@ public:
             if (dialogue < 18000 && dialogue > 16000)
                 affichetext("Good Bye.", "voice", 1, true);
             if (dialogue < 20000 && dialogue > 18000)
-                affichetext("But I'm magnanimous.", "voice", 1, true);
+                affichetext("But we are magnanimous.", "voice", 1, true);
             if (dialogue < 22000 && dialogue > 20000)
-                affichetext("I left you a lamp and some advice to help you.", "voice", 1, true);
+                affichetext("We left you a lamp and some advice to help you.", "voice", 1, true);
             if (dialogue < 24000 && dialogue > 22000)
                 affichetext("Listen carrefully.", "voice", 1, true);
             if (dialogue < 32000 && dialogue > 24000)
-                affichetext("My first is a place to sleep.\nMy second is  a game from our childhood.\nMy third is a way to grow up.\nMy fourth is.\nMy fifth is.\nMy sixth is. ", "voice", 6, true);
+                affichetext("My first is a place to sleep.\nMy second is  a game from our childhood.\nMy third is a way to grow up.\nMy fourth is where you are not allowed to jump.\nMy fifth is where the white and the black sing in harmony. ", "voice", 5, true);
+            if (dialogue < 34000 && dialogue > 32000) 
+                affichetext("We will let you guess the last one", "voice", 1, true);
+
             if (dialogue < 34000 && dialogue > 32000)
                 affichetext("Good luck.", "voice", 1, true);
             if (dialogue > 34000)
@@ -522,10 +519,9 @@ public:
             Transform T1 = CC.getCh2w();
             Vector x;
             int s;
-            if (shad.foudreControle > 2000)
+            if (shad.foudreControle > 3000)
             {
                 CC.update(delta);
-                std::cout << CC.Position << std::endl;
                 if (verifCollide(x, s))
                 {
                     CC.setCh2w(T1 * Translation(Vector(0,0,0.02)));
@@ -550,10 +546,13 @@ public:
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                 box_transform(T, m_caracter);
+            } else if (controleThundersound == 0 && shad.foudreControle > 100) {
+                aud.play_audio(aud.getThunder());
+                controleThundersound = 1;
             }
             m_view = CC.getCam();
 
-            // vérifie si on est à une certaine distance d'un indice et gère les interractions avec
+            // vérifie si on est à une certaine distance d'un indice et gère les interactions avec
             static int controlePos = -1;
 
             verifPos(Vector(4.5, 0, 3.5), controlePos, 0);
@@ -634,23 +633,22 @@ public:
             }
 
             //lance un éclair
-            static int j = 60000;
             static int timed = 0;
             static int controle = 0;
             if (controle == 0)
             {
-                shad.foudreControle = j;
+                shad.foudreControle = 60000;
                 controle = 1;
             }
 
-            if (timed < j)
+            if (timed < 60000)
             {
-                shad.foudreControle = j - timed;
+                shad.foudreControle = 60000 - timed;
             }
             else
             {
-                j = 600000;
-                shad.foudreControle = j;
+                shad.foudreControle = 60000;
+                controleThundersound = 0;
                 timed = 0;
                 countFoudre++;
                 actionEc++;
@@ -719,6 +717,7 @@ protected:
     int controleindice = 0;
     int controlefin = 3;
     int controlePoss[6] = {0};
+    int controleThundersound = 0;
     int dialogue = 0;
     int countFoudre = 0;
     int delay = 0;
