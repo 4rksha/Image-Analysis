@@ -510,21 +510,24 @@ public:
                 CC.update(delta);
                 if (verifCollide(x,s))
                 {
-                    CC.setCh2w(T1 * Translation(0.01 * CC.direction()));
+                    CC.setCh2w(T1 * Translation(Vector(0,0,0.1)));
                     Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                     box_transform(T, m_caracter);
-                    bool n2=false;
-                    for(unsigned int i=0;i<Objets[s]->boxes.size();i++)
+                    if (verifCollide(x,s))
                     {
-                        n2 = Objets[0]->boxes[0].collides3d(Objets[s]->boxes[i], x);
-                        if (n2 == true)
+                        CC.setCh2w(T1 * Translation(Vector(0,0,-0.1)));
+                        Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
+                        box_transform(T, m_caracter);
+                        if (verifCollide(x,s)) 
                         {
-                            break;
+                            CC.setCh2w(T1 * Translation(Vector(0.1,0,0)));
+                            Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
+                            box_transform(T, m_caracter);
+                            if (verifCollide(x,s)) 
+                            {
+                                CC.setCh2w(T1 * Translation(Vector(-0.1,0,0)));
+                            }
                         }
-                    }
-                    if (n2==true)
-                    {
-                        CC.setCh2w(T1 * Translation(0.01 * CC.direction()));
                     }
                 }
                 Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
