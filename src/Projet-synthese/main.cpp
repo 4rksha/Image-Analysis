@@ -436,7 +436,7 @@ public:
             if (dialogue < 12000 && dialogue > 10000)
                 affichetext("Lets play a game.", "voice", 1, true);
             if (dialogue < 14000 && dialogue > 12000)
-                affichetext("You have one hundred and twenty secondes to find\na way to exit.", "voice", 2, true);
+                affichetext("You have two hundred and forty seconds to find\na way to exit.", "voice", 2, true);
             if (dialogue < 16000 && dialogue > 14000)
                 affichetext("After this time...", "voice", 1, true);
             if (dialogue < 18000 && dialogue > 16000)
