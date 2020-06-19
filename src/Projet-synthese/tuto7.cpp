@@ -528,22 +528,38 @@ public:
                 std::cout << CC.Position << std::endl;
                 if (verifCollide(x, s))
                 {
+<<<<<<< HEAD
                     CC.setCh2w(T1 * Translation(Vector(0, 0, 0.1)));
+=======
+                    CC.setCh2w(T1 * Translation(Vector(0,0,0.02)));
+>>>>>>> 491f50dcaa2c3dac1757e2d12931f73861722e74
                     Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                     box_transform(T, m_caracter);
                     if (verifCollide(x, s))
                     {
+<<<<<<< HEAD
                         CC.setCh2w(T1 * Translation(Vector(0, 0, -0.1)));
+=======
+                        CC.setCh2w(T1 * Translation(Vector(0,0,-0.02)));
+>>>>>>> 491f50dcaa2c3dac1757e2d12931f73861722e74
                         Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                         box_transform(T, m_caracter);
                         if (verifCollide(x, s))
                         {
+<<<<<<< HEAD
                             CC.setCh2w(T1 * Translation(Vector(0.1, 0, 0)));
+=======
+                            CC.setCh2w(T1 * Translation(Vector(0.02,0,0)));
+>>>>>>> 491f50dcaa2c3dac1757e2d12931f73861722e74
                             Transform T = CC.getCh2w() * Translation(0, 0.3, 0) * RotationX(90) * Scale(0.3, 0.3, 0.2);
                             box_transform(T, m_caracter);
                             if (verifCollide(x, s))
                             {
+<<<<<<< HEAD
                                 CC.setCh2w(T1 * Translation(Vector(-0.1, 0, 0)));
+=======
+                                CC.setCh2w(T1 * Translation(Vector(-0.02,0,0)));
+>>>>>>> 491f50dcaa2c3dac1757e2d12931f73861722e74
                             }
                         }
                     }
